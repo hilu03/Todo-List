@@ -9,10 +9,10 @@ const projects = [];
 const defaultProject = new Project("default");
 projects.push(defaultProject);
 
-viewAllProject();
 const toggleProject = document.querySelector(".toggle-project");
 const toggleIcon = document.querySelector(".toggle-project img");
 let toggleOpen = true;
+viewAllProject();
 
 toggleProject.addEventListener("click", () => {
   if (toggleOpen) {
@@ -27,17 +27,41 @@ toggleProject.addEventListener("click", () => {
   }
 });
 
+const openAddProjectForm = document.querySelector(".add-project");
+const addProjectFormContainer = document.querySelector(".add-project-form");
+openAddProjectForm.addEventListener("click", () => {
+  addProjectFormContainer.classList.add("display");
+});
+
+const cancelButton = document.querySelector(".cancel-button");
+cancelButton.addEventListener("click", () => {
+  addProjectFormContainer.classList.remove("display");
+});
+
+const addProjectForm = document.querySelector("#add-project-form");
+addProjectForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const name = document.querySelector("#project-name").value;
+  const color = document.querySelector("#project-color").value;
+  const project = new Project(name, color);
+  projects.push(project);
+  viewAllProject();
+  addProjectFormContainer.classList.remove("display");
+});
+
+
 function viewAllProject() {
   const container = document.querySelector(".view-projects");
+  container.innerHTML = "";
   projects.forEach(project => {
     const html =
     `
-      <div class="project-name"><span>#</span> ${project.name}</div>
+      <div class="project-name"><span style="color: ${project.color}">#</span> ${project.name}</div>
     `;
     container.innerHTML += html;
-    const projectColor = document.querySelector(`.project-name span:last-child`);
-    projectColor.style.color = project.color;
   });
+  toggleOpen = true;
+  toggleIcon.src = toggleDown;
 }
 
 function hideProject() {
