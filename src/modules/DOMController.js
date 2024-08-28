@@ -7,7 +7,7 @@ export function DisplayController() {
   const toggleIcon = document.querySelector(".toggle-project img");
   let toggleOpen = true;
 
-  function viewAllProject() {
+  const viewAllProject = () => {
     const container = document.querySelector(".view-projects");
     container.innerHTML = "";
     projects.forEach(project => {
@@ -19,13 +19,12 @@ export function DisplayController() {
     });
     toggleOpen = true;
     toggleIcon.src = toggleDown;
-  }
+  };
   
-  function hideProject() {
+  const hideProject = () => {
     const container = document.querySelector(".view-projects");
     container.innerHTML = "";
-  }
-
+  };
 
   viewAllProject();
   
@@ -67,6 +66,19 @@ export function DisplayController() {
     addProjectFormContainer.classList.remove("display");
     isAddProjectFormOpen = false;
   });
+
+
+  const projectSelect = document.querySelector("#task-project");
+  const displayAllProjectsToSelect = () => {
+    let html = "";
+    projects.forEach((project, index) => {
+      html +=
+      `
+        <option value="${index}" style="color: ${project.color}"># ${project.name}</option>
+      `;
+    });
+    projectSelect.innerHTML = html;
+  };
   
   let isAddTaskFormOpen = false;
   const openAddTaskForm = document.querySelector(".add-task");
@@ -74,7 +86,23 @@ export function DisplayController() {
   openAddTaskForm.addEventListener("click", () => {
     addTaskFormContainer.classList.add("display");
     isAddTaskFormOpen = true;
+    displayAllProjectsToSelect();
   });
+
+  const prioritySelect = document.querySelector("#task-priority");
+  let oldChoice = "low";
+  prioritySelect.classList.add(`${oldChoice}-priority`);
+  prioritySelect.addEventListener("change", () => {
+    prioritySelect.classList.remove(`${oldChoice}-priority`);
+    prioritySelect.classList.add(`${prioritySelect.value}-priority`);
+    oldChoice = prioritySelect.value;
+  });
+
+  projectSelect.addEventListener("change", () => {
+    const index = Number(projectSelect.value);
+    const color = projects[index].color;
+    projectSelect.style.color = color;
+  }); 
   
   const cancelTaskButton = document.querySelector(".cancel-task-button");
   cancelTaskButton.addEventListener("click", () => {
@@ -92,14 +120,5 @@ export function DisplayController() {
       isAddTaskFormOpen = false;  
     }
   });
-  
-  const prioritySelect = document.querySelector("#task-priority");
-  let oldChoice = "low";
-  prioritySelect.classList.add(`${oldChoice}-priority`);
-  prioritySelect.addEventListener("change", () => {
-    prioritySelect.classList.remove(`${oldChoice}-priority`);
-    prioritySelect.classList.add(`${prioritySelect.value}-priority`);
-    oldChoice = prioritySelect.value;
-  });
-  
+    
 }
