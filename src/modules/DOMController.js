@@ -6,6 +6,8 @@ export function DisplayController() {
   const toggleProject = document.querySelector(".toggle-project");
   const toggleIcon = document.querySelector(".toggle-project img");
   let toggleOpen = true;
+  let isAddProjectFormOpen = false;
+  let isAddTaskFormOpen = false;
 
   const viewAllProject = () => {
     const container = document.querySelector(".view-projects");
@@ -29,24 +31,27 @@ export function DisplayController() {
   viewAllProject();
   
   toggleProject.addEventListener("click", () => {
-    if (toggleOpen) {
-      toggleIcon.src = toggleRight;
-      hideProject();
-      toggleOpen = false;
-    }
-    else {
-      toggleIcon.src = toggleDown;
-      viewAllProject();
-      toggleOpen = true;
+    if (!isAddTaskFormOpen && !isAddProjectFormOpen) {
+      if (toggleOpen) {
+        toggleIcon.src = toggleRight;
+        hideProject();
+        toggleOpen = false;
+      }
+      else {
+        toggleIcon.src = toggleDown;
+        viewAllProject();
+        toggleOpen = true;
+      }
     }
   });
   
-  let isAddProjectFormOpen = false;
   const openAddProjectForm = document.querySelector(".add-project");
   const addProjectFormContainer = document.querySelector(".add-project-container");
   openAddProjectForm.addEventListener("click", () => {
-    addProjectFormContainer.classList.add("display");
-    isAddProjectFormOpen = true; 
+    if (!isAddTaskFormOpen && !isAddProjectFormOpen) {
+      addProjectFormContainer.classList.add("display");
+      isAddProjectFormOpen = true;   
+    }
   });
   
   const cancelProjectButton = document.querySelector(".cancel-project-button");
@@ -80,13 +85,14 @@ export function DisplayController() {
     projectSelect.innerHTML = html;
   };
   
-  let isAddTaskFormOpen = false;
   const openAddTaskForm = document.querySelector(".add-task");
   const addTaskFormContainer = document.querySelector(".add-task-container");
   openAddTaskForm.addEventListener("click", () => {
-    addTaskFormContainer.classList.add("display");
-    isAddTaskFormOpen = true;
-    displayAllProjectsToSelect();
+    if (!isAddTaskFormOpen && !isAddProjectFormOpen) {
+      addTaskFormContainer.classList.add("display");
+      isAddTaskFormOpen = true;
+      displayAllProjectsToSelect();
+    }
   });
 
   const prioritySelect = document.querySelector("#task-priority");
