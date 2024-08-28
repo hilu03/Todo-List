@@ -1,4 +1,6 @@
-import "./styles.css";
+import "./styles/general.css";
+import "./styles/sidebar.css";
+import "./styles/createForm.css";
 import { Todo } from "./todo.js";
 import { Project } from "./project.js";
 import toggleDown from "./images/chevron-down.svg";
