@@ -75,12 +75,13 @@ body {
 }
 
 
-.add-project-form {
+.add-project-container,
+.add-task-container {
   position: fixed;
-  left: 500px;
+  left: 600px;
   top: 150px;
-  width: 30vw; /* Full width */
-  overflow: auto; /* Enable scroll if needed */
+  width: 30vw; 
+  overflow: auto;
   padding: 30px 70px 50px;
   z-index: 1;
   box-shadow: 
@@ -89,11 +90,16 @@ body {
   display: none;
 }
 
+.add-task-container {
+  top: 50px;
+}
+
 .display {
   display: block;
 }
 
-.add-project-form h2 {
+.add-project-container h2,
+.add-task-container h2 {
   text-align: center;
 }
 
@@ -104,22 +110,32 @@ body {
   gap: 10px;
 }
 
-.input-project-name input {
+.input-project-name input,
+.input-task-title input,
+.input-task-due input,
+.input-task-description textarea,
+.input-task-priority select {
   padding: 10px;
   font-size: 16px;
 }
 
-.input-project-name input:invalid {
+.input-project-name input:invalid,
+.input-task-title input:invalid,
+.input-task-due input:invalid {
   border: 2px solid red;
 }
 
-.input-project-name input:focus {
+.input-project-name input:focus,
+.input-task-title input:focus,
+.input-task-due input:focus {
   border: 2px solid blue;
   outline: none;
 }
 
 
-.input-project-name input:valid {
+.input-project-name input:valid,
+.input-task-title input:valid,
+.input-task-due input:valid {
   border: 2px solid green;
   outline: none;
 }
@@ -147,7 +163,9 @@ label {
 }
 
 .create-project-button,
-.cancel-button {
+.create-task-button,
+.cancel-project-button,
+.cancel-task-button {
   padding: 10px 20px;
   border: none;
   border-radius: 20px;
@@ -156,15 +174,51 @@ label {
 }
 
 .create-project-button:hover,
-.cancel-button:hover {
+.create-task-button:hover,
+.cancel-project-button:hover,
+.cancel-task-button:hover {
   opacity: 0.7;
 }
 
-.create-project-button {
+.create-project-button,
+.create-task-button {
   background-color: gold;
 }
 
-.cancel-button {
+.cancel-project-button,
+.cancel-task-button {
   background-color: red;
   color: white;
+}
+
+.high-priority {
+  color: red;
+}
+
+.medium-priority {
+  color: orange;
+}
+
+.low-priority {
+  color: lightskyblue;
+}
+
+#add-task-form div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 20px;
+}
+
+.input-task-description textarea {
+  resize: none;
+}
+
+.add-task-container {
+  padding-bottom: 20px;
+}
+
+.task-button-container {
+  margin-bottom: 0;
+  margin-top: 30px;
 }
