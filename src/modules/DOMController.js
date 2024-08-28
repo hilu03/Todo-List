@@ -1,6 +1,7 @@
 import toggleDown from "../images/chevron-down.svg";
 import toggleRight from "../images/chevron-right.svg";
 import { Project, projects } from "./project.js";
+import { Todo } from "./todo.js";
 
 export function DisplayController() {
   const toggleProject = document.querySelector(".toggle-project");
@@ -53,11 +54,15 @@ export function DisplayController() {
       isAddProjectFormOpen = true;   
     }
   });
+
+  const closeAddProjectForm = () => {
+    addProjectFormContainer.classList.remove("display");
+    isAddProjectFormOpen = false;
+  };
   
   const cancelProjectButton = document.querySelector(".cancel-project-button");
   cancelProjectButton.addEventListener("click", () => {
-    addProjectFormContainer.classList.remove("display");
-    isAddProjectFormOpen = false;
+    closeAddProjectForm();
   });
   
   const addProjectForm = document.querySelector("#add-project-form");
@@ -68,10 +73,8 @@ export function DisplayController() {
     const project = new Project(name, color);
     projects.push(project);
     viewAllProject();
-    addProjectFormContainer.classList.remove("display");
-    isAddProjectFormOpen = false;
+    closeAddProjectForm();
   });
-
 
   const projectSelect = document.querySelector("#task-project");
   const displayAllProjectsToSelect = () => {
@@ -95,6 +98,11 @@ export function DisplayController() {
     }
   });
 
+  const closeAddTaskForm = () => {
+    addTaskFormContainer.classList.remove("display");
+    isAddTaskFormOpen = false;
+  };
+
   const prioritySelect = document.querySelector("#task-priority");
   let oldChoice = "low";
   prioritySelect.classList.add(`${oldChoice}-priority`);
@@ -112,19 +120,29 @@ export function DisplayController() {
   
   const cancelTaskButton = document.querySelector(".cancel-task-button");
   cancelTaskButton.addEventListener("click", () => {
-    addTaskFormContainer.classList.remove("display");
-    isAddTaskFormOpen = false;
+    closeAddTaskForm();
   });
   
   window.addEventListener("keydown", (e) => {
     if (isAddProjectFormOpen && e.key === "Escape") {
-      addProjectFormContainer.classList.remove("display");
-      isAddProjectFormOpen = false;  
+      closeAddProjectForm();
     }
     else if (isAddTaskFormOpen && e.key === "Escape") {
-      addTaskFormContainer.classList.remove("display");
-      isAddTaskFormOpen = false;  
+      closeAddTaskForm();
     }
   });
-    
+  
+  const addTaskForm = document.querySelector("#add-task-form");
+  addTaskForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const title = document.querySelector("#task-title").value;
+    const description = document.querySelector("#task-description").value;
+    const due = document.querySelector("#task-due").value;
+    const projectIndex = Number(document.querySelector("#task-project").value);
+    const priority = document.querySelector("#task-priority").value;
+    const task = new Todo(title, description, due, priority);
+    projects[projectIndex].todoList.push(task);
+    closeAddTaskForm();
+  });
+
 }

@@ -17,7 +17,7 @@ export const projects = [];
 
 const defaultProject = new Project("default");
 projects.push(defaultProject);
-const todo1 = new Todo("Wash dishes", "dajshd", new Date(), 2);
-const todo2 = new Todo("Play with cats", "hahahah", new Date(), 1);
+const todo1 = new Todo("Wash dishes", "dajshd", new Date(), "medium");
+const todo2 = new Todo("Play with cats", "hahahah", new Date(), "high");
 defaultProject.addTodo(todo1);
 defaultProject.addTodo(todo2);
