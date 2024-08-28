@@ -8,6 +8,11 @@ const projects = [];
 
 const defaultProject = new Project("default");
 projects.push(defaultProject);
+const todo1 = new Todo("Wash dishes", "dajshd", new Date(), 2);
+const todo2 = new Todo("Play with cats", "hahahah", new Date(), 1);
+defaultProject.addTodo(todo1);
+defaultProject.addTodo(todo2);
+
 
 const toggleProject = document.querySelector(".toggle-project");
 const toggleIcon = document.querySelector(".toggle-project img");
@@ -27,15 +32,18 @@ toggleProject.addEventListener("click", () => {
   }
 });
 
+let isAddProjectFormOpen = false;
 const openAddProjectForm = document.querySelector(".add-project");
 const addProjectFormContainer = document.querySelector(".add-project-form");
 openAddProjectForm.addEventListener("click", () => {
   addProjectFormContainer.classList.add("display");
+  isAddProjectFormOpen = true; 
 });
 
 const cancelButton = document.querySelector(".cancel-button");
 cancelButton.addEventListener("click", () => {
   addProjectFormContainer.classList.remove("display");
+  isAddProjectFormOpen = false;
 });
 
 const addProjectForm = document.querySelector("#add-project-form");
@@ -47,6 +55,14 @@ addProjectForm.addEventListener("submit", (e) => {
   projects.push(project);
   viewAllProject();
   addProjectFormContainer.classList.remove("display");
+  isAddProjectFormOpen = false;
+});
+
+window.addEventListener("keydown", (e) => {
+  if (isAddProjectFormOpen && e.key === "Escape") {
+    addProjectFormContainer.classList.remove("display");
+    isAddProjectFormOpen = false;  
+  }
 });
 
 
