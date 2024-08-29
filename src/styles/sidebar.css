@@ -1,4 +1,5 @@
 .sidebar {
+  top: 0;
   left: 0;
   position: fixed;
   width: 20vw;
@@ -52,8 +53,9 @@
   opacity: 0.8;
 }
 
-.row:hover {
-  background-color: crimson;
+.row:hover,
+.project-name:hover {
+  background-color: teal;
 }
 
 .add-project img:hover {
