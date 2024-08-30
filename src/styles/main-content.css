@@ -9,6 +9,7 @@ h1 {
   flex-wrap: wrap;
   gap: 20px;
   padding: 20px;
+  align-items: flex-start;
 }
 
 .task-card {
@@ -20,6 +21,7 @@ h1 {
   display: flex;
   align-items: start;
   gap: 10px;
+  max-width: 300px;
 }
 
 .middle {
@@ -34,7 +36,8 @@ h1 {
   cursor: pointer;
 }
 
-.title {
+.title,
+.project {
   word-break: break-all;
 }
 
@@ -76,6 +79,7 @@ h1 {
 .edit-container img,
 .delete-container img {
   width: 20px;
+  cursor: pointer;
 }
 
 .right {

@@ -140,6 +140,7 @@ export function DisplayController() {
     let html = "";
     projects.forEach((project, projectIndex) => {
       project.todoList.forEach((task, taskIndex) => {
+        console.log(taskIndex);
         html += 
         `
           <div class="task-card ${task.priority}-task">
