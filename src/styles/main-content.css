@@ -1,5 +1,19 @@
 .more img {
   width: 30px;
+  cursor: pointer;
+}
+
+.more {
+  width: 38px;
+  height: 38px;
+  border-radius: 19px;
+  display: flex;
+  justify-content: center;
+}
+
+.more:hover {
+  opacity: 0.7;
+  border: 2px solid;
 }
 
 h1 {
@@ -32,4 +46,16 @@ h1 {
   border-radius: 10px;
   border: 1px solid black;
   cursor: pointer;
+}
+
+.low-task {
+  border-left: 5px solid lightskyblue;
+}
+
+.medium-task {
+  border-left: 5px solid orange;
+}
+
+.high-task {
+  border-left: 5px solid red;
 }

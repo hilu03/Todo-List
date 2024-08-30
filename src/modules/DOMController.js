@@ -131,6 +131,58 @@ export function DisplayController() {
       closeAddTaskForm();
     }
   });
+
+  const contentContainer = document.querySelector(".container");
+  const displayAllTask = () => {
+    let html = "";
+    projects.forEach((project, projectIndex) => {
+      project.todoList.forEach((task, taskIndex) => {
+        html += 
+        `
+          <div class="task-card ${task.priority}-task">
+            <div class="complete" data-task-id="${taskIndex}" data-project-id="${projectIndex}"></div>
+            <div class="middle">
+              <div class="title">${task.title}</div>
+              <div class="due">${task.dueDate}</div>
+              <div class="project">
+                <span style="color: ${project.color}">#</span> ${project.name}
+              </div> 
+              <div class="description" data-task-id="${taskIndex}" data-project-id="${projectIndex}"></div>
+            </div>
+            <div class="more" data-task-id="${taskIndex}" data-project-id="${projectIndex}" data-toggle="less">
+              <img src=${toggleRight}>
+            </div>
+          </div>
+        `;
+      });
+    });
+
+    contentContainer.innerHTML = html;
+
+    const expandTaskButtons = document.querySelectorAll(".more");
+    expandTaskButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        const projectIndex = Number(button.dataset.projectId);
+        const taskIndex = Number(button.dataset.taskId);
+        const description = document.querySelector(`.description[data-task-id="${taskIndex}"][data-project-id="${projectIndex}"]`);
+        const icon = button.firstElementChild;
+        if (button.dataset.toggle === "less") {
+          description.textContent = projects[projectIndex].todoList[taskIndex].description;
+          icon.src = toggleDown;
+          button.dataset.toggle = "more";  
+        }
+        else {
+          description.textContent = "";
+          icon.src = toggleRight;
+          button.dataset.toggle = "less";
+        }
+      });
+    });
+
+  };
+
+  displayAllTask();
+
   
   const addTaskForm = document.querySelector("#add-task-form");
   addTaskForm.addEventListener("submit", (e) => {
@@ -143,6 +195,7 @@ export function DisplayController() {
     const task = new Todo(title, description, due, priority);
     projects[projectIndex].todoList.push(task);
     closeAddTaskForm();
+    displayAllTask();
   });
 
 }
