@@ -1,11 +1,12 @@
 .sidebar {
   top: 0;
   left: 0;
+  bottom: 0;
   position: fixed;
-  width: 20vw;
+  width: 300px;
   background-color: gold;
-  height: 100vh;
   z-index: 1;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 20px;
