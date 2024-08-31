@@ -147,6 +147,16 @@ export function sidebarDOM() {
     contentDisplay.displayAllTask();
   });
 
+  const displayDateInTodayIcon = () => {
+    const todayIcon = document.querySelector(".today.icon-container");
+    const date = new Date().getDate();
+    const html = 
+    `
+      <div class="date">${date}</div>
+    `;
+    todayIcon.innerHTML += html;
+  };
+  displayDateInTodayIcon();
 
   return { viewAllProject };
 }
