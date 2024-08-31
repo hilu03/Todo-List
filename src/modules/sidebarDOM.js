@@ -50,7 +50,7 @@ export function sidebarDOM() {
   const openAddProjectForm = document.querySelector(".add-project");
   const addProjectFormContainer = document.querySelector(".add-project-container");
   openAddProjectForm.addEventListener("click", () => {
-    if (!isAddTaskFormOpen && !isAddProjectFormOpen) {
+    if (!isAddTaskFormOpen && !isAddProjectFormOpen && !contentDisplay.anyUpdateFormOpen()) {
       addProjectFormContainer.classList.add("display");
       isAddProjectFormOpen = true;   
     }
@@ -85,7 +85,7 @@ export function sidebarDOM() {
   const openAddTaskForm = document.querySelector(".add-task");
   const addTaskFormContainer = document.querySelector(".add-task-container");
   openAddTaskForm.addEventListener("click", () => {
-    if (!isAddTaskFormOpen && !isAddProjectFormOpen) {
+    if (!isAddTaskFormOpen && !isAddProjectFormOpen && !contentDisplay.anyUpdateFormOpen()) {
       addTaskFormContainer.classList.add("display");
       isAddTaskFormOpen = true;
       displayAllProjectsToSelect();
@@ -123,6 +123,9 @@ export function sidebarDOM() {
     }
     else if (isAddTaskFormOpen && e.key === "Escape") {
       closeAddTaskForm();
+    }
+    else if (contentDisplay.anyUpdateFormOpen() && e.key === "Escape") {
+      contentDisplay.closeUpdateForm();
     }
   });
 

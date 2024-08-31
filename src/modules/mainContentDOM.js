@@ -9,6 +9,8 @@ import { Todo } from "./todo.js";
 
 export function MainContentDOM() {
   const contentContainer = document.querySelector(".content-container");
+  const updateDivContainer = document.querySelector(".update-task-container");
+
   const displayAllTask = () => {
     const displayTasks = () => {
       let html = "";
@@ -87,73 +89,89 @@ export function MainContentDOM() {
     editContainers.forEach(editContainer => {
       const editButton = editContainer.firstElementChild;
       editButton.addEventListener("click", () => {
-        const projectIndex = Number(editContainer.dataset.projectId);
-        const taskIndex = Number(editContainer.dataset.taskId);
-        const task = projects[projectIndex].todoList[taskIndex];
-        const html = 
-        `
-          <h2>Update your task</h2>
-          <form action="#" id="update-task-form">
-            <div class="input-update-task-title">
-              <label for="update-task-title">Title:</label>
-              <input type="text" name="update-task-title" id="update-task-title" required minlength="3" placeholder="E.g: Warm up" value="${task.title}">
-            </div>
-            <div class="input-update-task-description">
-              <label for="update-task-description">Description:</label>
-              <textarea name="update-task-description" id="update-task-description" rows="5">${task.description}</textarea>
-            </div>
-            <div class="input-update-task-due">
-              <label for="update-task-due">Due date:</label>
-              <input type="date" id="update-task-due" required value="${task.dueDate}">
-            </div>
-            <div class="input-update-task-project">
-              <label for="update-task-project">Project:</label>
-              <select id="update-task-project">
-                ${getAllProjectChoices()}
-              </select>
-            </div>
-            <div class="input-update-task-priority">
-              <label for="update-task-priority">Priority:</label>
-              <select id="update-task-priority">
-                <option value="high" class="high-priority">High</option>
-                <option value="medium" class="medium-priority">Medium</option>
-                <option value="low" class="low-priority">Low</option>
-              </select>
-            </div>
-            <div class="update-task-button-container">
-              <button class="update-task-button" type="submit">Update</button>
-              <button class="cancel-update-task-button" type="button">Cancel</button>
-            </div>  
-          </form>
-        `;
-        const container = document.querySelector(".update-task-container");
-        container.innerHTML = html; 
-        container.classList.add("display");
-
-        const prioritySelect = document.querySelector("#update-task-priority");
-        let oldPriority = task.priority;
-        prioritySelect.value = oldPriority;
-        prioritySelect.classList.add(`${oldPriority}-priority`);
-
-        prioritySelect.addEventListener("change", () => {
-          prioritySelect.classList.remove(`${oldPriority}-priority`);
-          prioritySelect.classList.add(`${prioritySelect.value}-priority`);
-          oldPriority = prioritySelect.value;
-        });
-        
-        const projectSelect = document.querySelector("#update-task-project");
-        document.querySelector(`#update-task-project option[value="${projectIndex}"]`).selected = "selected";
-        projectSelect.style.color = projects[projectIndex].color;
-        
-        projectSelect.addEventListener("change", () => {
-          const index = Number(projectSelect.value);
-          const color = projects[index].color;
-          projectSelect.style.color = color;
-        });       
+        const isAddProjectFormOpen = document.querySelector(".add-project-container").classList.contains("display");
+        const isAddTaskFormOpen = document.querySelector(".add-task-container").classList.contains("display");
+        if (!isAddProjectFormOpen && !isAddTaskFormOpen) {
+          const projectIndex = Number(editContainer.dataset.projectId);
+          const taskIndex = Number(editContainer.dataset.taskId);
+          const task = projects[projectIndex].todoList[taskIndex];
+          const html = 
+          `
+            <h2>Update your task</h2>
+            <form action="#" id="update-task-form">
+              <div class="input-update-task-title">
+                <label for="update-task-title">Title:</label>
+                <input type="text" name="update-task-title" id="update-task-title" required minlength="3" placeholder="E.g: Warm up" value="${task.title}">
+              </div>
+              <div class="input-update-task-description">
+                <label for="update-task-description">Description:</label>
+                <textarea name="update-task-description" id="update-task-description" rows="5">${task.description}</textarea>
+              </div>
+              <div class="input-update-task-due">
+                <label for="update-task-due">Due date:</label>
+                <input type="date" id="update-task-due" required value="${task.dueDate}">
+              </div>
+              <div class="input-update-task-project">
+                <label for="update-task-project">Project:</label>
+                <select id="update-task-project">
+                  ${getAllProjectChoices()}
+                </select>
+              </div>
+              <div class="input-update-task-priority">
+                <label for="update-task-priority">Priority:</label>
+                <select id="update-task-priority">
+                  <option value="high" class="high-priority">High</option>
+                  <option value="medium" class="medium-priority">Medium</option>
+                  <option value="low" class="low-priority">Low</option>
+                </select>
+              </div>
+              <div class="update-task-button-container">
+                <button class="update-task-button" type="submit">Update</button>
+                <button class="cancel-update-task-button" type="button">Cancel</button>
+              </div>  
+            </form>
+          `;
+          updateDivContainer.innerHTML = html; 
+          updateDivContainer.classList.add("display");
+  
+          const prioritySelect = document.querySelector("#update-task-priority");
+          let oldPriority = task.priority;
+          prioritySelect.value = oldPriority;
+          prioritySelect.classList.add(`${oldPriority}-priority`);
+  
+          prioritySelect.addEventListener("change", () => {
+            prioritySelect.classList.remove(`${oldPriority}-priority`);
+            prioritySelect.classList.add(`${prioritySelect.value}-priority`);
+            oldPriority = prioritySelect.value;
+          });
+          
+          const projectSelect = document.querySelector("#update-task-project");
+          document.querySelector(`#update-task-project option[value="${projectIndex}"]`).selected = "selected";
+          projectSelect.style.color = projects[projectIndex].color;
+          
+          projectSelect.addEventListener("change", () => {
+            const index = Number(projectSelect.value);
+            const color = projects[index].color;
+            projectSelect.style.color = color;
+          });  
+          
+          const cancelButtons = document.querySelectorAll(".cancel-update-task-button");
+          cancelButtons.forEach(button => {
+            button.addEventListener("click", () => {
+              closeUpdateForm();
+            });
+          });  
+        }
       });
     });
   
   };
 
-  return { displayAllTask };
+  const closeUpdateForm = () => {
+    updateDivContainer.classList.remove("display");
+  };
+
+  const anyUpdateFormOpen = () => updateDivContainer.classList.contains("display");
+
+  return { displayAllTask, anyUpdateFormOpen, closeUpdateForm };
 }
