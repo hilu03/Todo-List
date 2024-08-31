@@ -3,11 +3,11 @@ import toggleRight from "../images/chevron-right.svg";
 import deleteIcon from "../images/delete.svg";
 import completeIcon from "../images/check-outline.svg";
 import editIcon from "../images/pencil-outline.svg";
-import { Project, projects } from "./project.js";
+import { projects } from "./project.js";
 import { Todo } from "./todo.js";
 
 
-export function MainContentDisplay() {
+export function MainContentDOM() {
   const contentContainer = document.querySelector(".content-container");
   const displayAllTask = () => {
     const displayTasks = () => {
@@ -55,7 +55,6 @@ export function MainContentDisplay() {
         const icon = button.firstElementChild;
         const editButton = button.nextElementSibling;
         const deleteButton = editButton.nextElementSibling;
-        console.log(1);
         if (button.dataset.toggle === "less") {
           description.textContent = projects[projectIndex].todoList[taskIndex].description;
           icon.src = toggleDown;
@@ -83,6 +82,8 @@ export function MainContentDisplay() {
         displayAllTask();
       });
     });
+
+    
   
   };
 
