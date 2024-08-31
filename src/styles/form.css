@@ -47,8 +47,7 @@
 .input-update-task-title input,
 .input-update-task-due input,
 .input-update-task-description textarea,
-.input-update-task-priority select,
-.input-update-task-project select {
+.input-update-task-priority select {
   padding: 10px;
   font-size: 16px;
 }
@@ -171,4 +170,9 @@ label {
 #update-task-form .update-task-button-container {
   margin-bottom: 10px;
   margin-top: 20px;
+}
+
+#update-task-form .update-task-project {
+  display: flex;
+  flex-direction: row;
 }

@@ -8,5 +8,4 @@ export function DisplayController() {
   contentDisplay.displayAllTask();
   sidebarDisplay.viewAllProject();
   
-
 }

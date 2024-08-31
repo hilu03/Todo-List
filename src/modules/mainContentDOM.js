@@ -4,7 +4,6 @@ import deleteIcon from "../images/delete.svg";
 import completeIcon from "../images/check-outline.svg";
 import editIcon from "../images/pencil-outline.svg";
 import { projects, getAllProjectChoices } from "./project.js";
-import { Todo } from "./todo.js";
 
 
 export function MainContentDOM() {
@@ -98,7 +97,7 @@ export function MainContentDOM() {
           const html = 
           `
             <h2>Update your task</h2>
-            <form action="#" id="update-task-form">
+            <form action="#" id="update-task-form" data-task-id="${taskIndex}" data-project-id="${projectIndex}">
               <div class="input-update-task-title">
                 <label for="update-task-title">Title:</label>
                 <input type="text" name="update-task-title" id="update-task-title" required minlength="3" placeholder="E.g: Warm up" value="${task.title}">
@@ -111,11 +110,11 @@ export function MainContentDOM() {
                 <label for="update-task-due">Due date:</label>
                 <input type="date" id="update-task-due" required value="${task.dueDate}">
               </div>
-              <div class="input-update-task-project">
-                <label for="update-task-project">Project:</label>
-                <select id="update-task-project">
-                  ${getAllProjectChoices()}
-                </select>
+              <div class="update-task-project">
+                <strong>Project: </strong>
+                <span style="color: ${projects[projectIndex].color}">
+                  #${projects[projectIndex].name}
+                </span>
               </div>
               <div class="input-update-task-priority">
                 <label for="update-task-priority">Priority:</label>
@@ -144,27 +143,31 @@ export function MainContentDOM() {
             prioritySelect.classList.add(`${prioritySelect.value}-priority`);
             oldPriority = prioritySelect.value;
           });
-          
-          const projectSelect = document.querySelector("#update-task-project");
-          document.querySelector(`#update-task-project option[value="${projectIndex}"]`).selected = "selected";
-          projectSelect.style.color = projects[projectIndex].color;
-          
-          projectSelect.addEventListener("change", () => {
-            const index = Number(projectSelect.value);
-            const color = projects[index].color;
-            projectSelect.style.color = color;
-          });  
-          
+                              
           const cancelButtons = document.querySelectorAll(".cancel-update-task-button");
           cancelButtons.forEach(button => {
             button.addEventListener("click", () => {
               closeUpdateForm();
             });
           });  
+
+          const updateTaskForm = document.querySelector("#update-task-form");
+          updateTaskForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+        
+            const projectIndex = Number(updateTaskForm.dataset.projectId);
+            const taskIndex = Number(updateTaskForm.dataset.taskId);
+            const title = document.querySelector("#update-task-title").value;
+            const description = document.querySelector("#update-task-description").value;
+            const dueDate = document.querySelector("#update-task-due").value;
+            const priority = document.querySelector("#update-task-priority").value;
+        
+            projects[projectIndex].todoList[taskIndex].updateTodo(title, description, dueDate, priority);
+          });
+          
         }
       });
     });
-  
   };
 
   const closeUpdateForm = () => {
