@@ -1,5 +1,6 @@
 .add-project-container,
-.add-task-container {
+.add-task-container,
+.update-task-container {
   position: fixed;
   left: 600px;
   top: 150px;
@@ -14,7 +15,8 @@
   background-color: white;
 }
 
-.add-task-container {
+.add-task-container,
+.update-task-container {
   top: 20px;
   padding: 10px 70px 0;
 }
@@ -24,7 +26,8 @@
 }
 
 .add-project-container h2,
-.add-task-container h2 {
+.add-task-container h2,
+.update-task-container h2 {
   text-align: center;
 }
 
@@ -40,20 +43,29 @@
 .input-task-due input,
 .input-task-description textarea,
 .input-task-priority select,
-.input-task-project select {
+.input-task-project select,
+.input-update-task-title input,
+.input-update-task-due input,
+.input-update-task-description textarea,
+.input-update-task-priority select,
+.input-update-task-project select {
   padding: 10px;
   font-size: 16px;
 }
 
 .input-project-name input:invalid,
 .input-task-title input:invalid,
-.input-task-due input:invalid {
+.input-task-due input:invalid,
+.input-update-task-title input:invalid,
+.input-update-task-due input:invalid {
   border: 2px solid red;
 }
 
 .input-project-name input:focus,
 .input-task-title input:focus,
-.input-task-due input:focus {
+.input-task-due input:focus,
+.input-update-task-title input:focus,
+.input-update-task-due input:focus {
   border: 2px solid blue;
   outline: none;
 }
@@ -61,7 +73,9 @@
 
 .input-project-name input:valid,
 .input-task-title input:valid,
-.input-task-due input:valid {
+.input-task-due input:valid,
+.input-update-task-title input:valid,
+.input-update-task-due input:valid {
   border: 2px solid green;
   outline: none;
 }
@@ -91,7 +105,9 @@ label {
 .create-project-button,
 .create-task-button,
 .cancel-project-button,
-.cancel-task-button {
+.cancel-task-button,
+.update-task-button,
+.cancel-update-task-button {
   padding: 10px 20px;
   border: none;
   border-radius: 20px;
@@ -102,17 +118,21 @@ label {
 .create-project-button:hover,
 .create-task-button:hover,
 .cancel-project-button:hover,
-.cancel-task-button:hover {
+.cancel-task-button:hover,
+.update-task-button:hover,
+.cancel-update-task-button:hover {
   opacity: 0.7;
 }
 
 .create-project-button,
-.create-task-button {
+.create-task-button,
+.update-task-button {
   background-color: gold;
 }
 
 .cancel-project-button,
-.cancel-task-button {
+.cancel-task-button,
+.cancel-update-task-button {
   background-color: red;
   color: white;
 }
@@ -129,22 +149,26 @@ label {
   color: lightskyblue;
 }
 
-#add-task-form div {
+#add-task-form div,
+#update-task-form div {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; 
   gap: 5px;
   margin-bottom: 20px;
 }
 
-.input-task-description textarea {
+.input-task-description textarea,
+.input-update-task-description textarea {
   resize: none;
 }
 
-.add-task-container {
+.add-task-container,
+.update-task-container {
   padding-bottom: 20px;
 }
 
-#add-task-form .task-button-container {
+#add-task-form .task-button-container,
+#update-task-form .update-task-button-container {
   margin-bottom: 10px;
   margin-top: 20px;
 }

@@ -1,6 +1,6 @@
 import toggleDown from "../images/chevron-down.svg";
 import toggleRight from "../images/chevron-right.svg";
-import { Project, projects } from "./project.js";
+import { Project, projects, getAllProjectChoices } from "./project.js";
 import { Todo } from "./todo.js";
 import { MainContentDOM } from "./mainContentDOM.js";
 
@@ -79,14 +79,7 @@ export function sidebarDOM() {
 
   const projectSelect = document.querySelector("#task-project");
   const displayAllProjectsToSelect = () => {
-    let html = "";
-    projects.forEach((project, index) => {
-      html +=
-      `
-        <option value="${index}" style="color: ${project.color}"># ${project.name}</option>
-      `;
-    });
-    projectSelect.innerHTML = html;
+    projectSelect.innerHTML = getAllProjectChoices();;
   };
   
   const openAddTaskForm = document.querySelector(".add-task");
