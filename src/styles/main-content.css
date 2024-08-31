@@ -82,6 +82,11 @@ h1 {
   cursor: pointer;
 }
 
+.edit-container img:hover,
+.delete-container img:hover {
+  opacity: 0.7;
+}
+
 .right {
   display: flex;
   flex-direction: column;
