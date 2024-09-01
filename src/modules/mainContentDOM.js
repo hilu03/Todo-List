@@ -10,43 +10,42 @@ export function MainContentDOM() {
   const contentContainer = document.querySelector(".content-container");
   const updateDivContainer = document.querySelector(".update-task-container");
 
-  const displayAllTask = () => {
-    const displayTasks = () => {
-      let html = "";
-      projects.forEach((project, projectIndex) => {
-        project.todoList.forEach((task, taskIndex) => {
-          html += 
-          `
-            <div class="task-card ${task.priority}-task">
-              <div class="complete" data-task-id="${taskIndex}" data-project-id="${projectIndex}"></div>
-              <div class="middle">
-                <div class="title">${task.title}</div>
-                <div class="due">${task.dueDate}</div>
-                <div class="project">
-                  <span style="color: ${project.color}">#</span> ${project.name}
-                </div> 
-                <div class="description" data-task-id="${taskIndex}" data-project-id="${projectIndex}"></div>
+  const displayTasks = () => {
+    let html = "";
+    projects.forEach((project, projectIndex) => {
+      project.todoList.forEach((task, taskIndex) => {
+        html += 
+        `
+          <div class="task-card ${task.priority}-task">
+            <div class="complete" data-task-id="${taskIndex}" data-project-id="${projectIndex}"></div>
+            <div class="middle">
+              <div class="title">${task.title}</div>
+              <div class="due">${task.dueDate}</div>
+              <div class="project">
+                <span style="color: ${project.color}">#</span> ${project.name}
+              </div> 
+              <div class="description" data-task-id="${taskIndex}" data-project-id="${projectIndex}"></div>
+            </div>
+            <div class="right">
+              <div class="more" data-task-id="${taskIndex}" data-project-id="${projectIndex}" data-toggle="less">
+                <img src=${toggleRight}>
               </div>
-              <div class="right">
-                <div class="more" data-task-id="${taskIndex}" data-project-id="${projectIndex}" data-toggle="less">
-                  <img src=${toggleRight}>
-                </div>
-                <div class="edit-container" data-task-id="${taskIndex}" data-project-id="${projectIndex}">
-                  <img src=${editIcon}>
-                </div>
-                <div class="delete-container" data-task-id="${taskIndex}" data-project-id="${projectIndex}">
-                  <img src=${deleteIcon}>
-                </div>
+              <div class="edit-container" data-task-id="${taskIndex}" data-project-id="${projectIndex}">
+                <img src=${editIcon}>
+              </div>
+              <div class="delete-container" data-task-id="${taskIndex}" data-project-id="${projectIndex}">
+                <img src=${deleteIcon}>
               </div>
             </div>
-          `;
-        });
+          </div>
+        `;
       });
-      contentContainer.innerHTML = html;
-    };
+    });
+    contentContainer.innerHTML = html;
+  };
 
-    displayTasks();
 
+  const expandTaskEvent = () => {
     const expandTaskButtons = document.querySelectorAll(".more");
     expandTaskButtons.forEach(button => {
       button.addEventListener("click", () => {
@@ -72,7 +71,9 @@ export function MainContentDOM() {
         }
       });
     });
+  };
 
+  const deleteTask = () => {
     const deleteContainers = document.querySelectorAll(".delete-container");
     deleteContainers.forEach(deleteContainer => {
       const deleteButton = deleteContainer.firstElementChild;
@@ -87,7 +88,33 @@ export function MainContentDOM() {
         }
       });
     });
+  };
 
+  const closeUpdateForm = () => {
+    updateDivContainer.classList.remove("display");
+  };
+
+  const anyUpdateFormOpen = () => updateDivContainer.classList.contains("display");
+
+  const updateTask = () => {
+    const updateTaskForm = document.querySelector("#update-task-form");
+    updateTaskForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+  
+      const projectIndex = Number(updateTaskForm.dataset.projectId);
+      const taskIndex = Number(updateTaskForm.dataset.taskId);
+      const title = document.querySelector("#update-task-title").value;
+      const description = document.querySelector("#update-task-description").value;
+      const dueDate = document.querySelector("#update-task-due").value;
+      const priority = document.querySelector("#update-task-priority").value;
+  
+      projects[projectIndex].todoList[taskIndex].updateTodo(title, description, dueDate, priority);
+      closeUpdateForm();
+      displayAllTask();
+    });
+  };
+
+  const updateTaskForm = () => {
     const editContainers = document.querySelectorAll(".edit-container");
     editContainers.forEach(editContainer => {
       const editButton = editContainer.firstElementChild;
@@ -155,32 +182,22 @@ export function MainContentDOM() {
             });
           });  
 
-          const updateTaskForm = document.querySelector("#update-task-form");
-          updateTaskForm.addEventListener("submit", (e) => {
-            e.preventDefault();
-        
-            const projectIndex = Number(updateTaskForm.dataset.projectId);
-            const taskIndex = Number(updateTaskForm.dataset.taskId);
-            const title = document.querySelector("#update-task-title").value;
-            const description = document.querySelector("#update-task-description").value;
-            const dueDate = document.querySelector("#update-task-due").value;
-            const priority = document.querySelector("#update-task-priority").value;
-        
-            projects[projectIndex].todoList[taskIndex].updateTodo(title, description, dueDate, priority);
-            closeUpdateForm();
-            displayAllTask();
-          });
-          
+          updateTask();
         }
       });
     });
   };
 
-  const closeUpdateForm = () => {
-    updateDivContainer.classList.remove("display");
+  const displayAllTask = () => {
+    displayTasks();
+    expandTaskEvent();
+    deleteTask();
+    updateTaskForm();
   };
 
-  const anyUpdateFormOpen = () => updateDivContainer.classList.contains("display");
+  const displayTasksInProject = (projectIndex) => {
+    
+  };
 
-  return { displayAllTask, anyUpdateFormOpen, closeUpdateForm };
+  return { displayAllTask, anyUpdateFormOpen, closeUpdateForm, displayTasksInProject };
 }
