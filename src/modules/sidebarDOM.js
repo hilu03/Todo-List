@@ -1,5 +1,7 @@
 import toggleDown from "../images/chevron-down.svg";
 import toggleRight from "../images/chevron-right.svg";
+import deleteIcon from "../images/delete.svg";
+import editIcon from "../images/pencil-outline.svg";
 import { Project, projects } from "./project.js";
 import { Todo } from "./todo.js";
 import { MainContentDOM } from "./mainContentDOM.js";
@@ -31,12 +33,25 @@ export function sidebarDOM() {
     projects.forEach((project, projectIndex) => {
       const html =
       `
-        <div class="project-name" data-project-id="${projectIndex}"><span style="color: ${project.color}">#</span> ${project.name}</div>
+        <div class="project-card">
+          <div class="project-name" data-project-id="${projectIndex} style="color: ${project.color}"">
+            #${project.name}
+          </div>
+          <div class="right-side">
+            <div class="edit-project-container" data-project-id="${projectIndex}">
+              <img src=${editIcon}>
+            </div>
+            <div class="delete-project-container" data-project-id="${projectIndex}">
+              <img src=${deleteIcon}>
+            </div>
+          </div>
+        </div>
       `;
       container.innerHTML += html;
     });
     toggleOpen = true;
     toggleIcon.src = toggleDown;
+
     viewTaskInProject();
   };
   

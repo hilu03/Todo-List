@@ -1,8 +1,8 @@
 import toggleDown from "../images/chevron-down.svg";
 import toggleRight from "../images/chevron-right.svg";
 import deleteIcon from "../images/delete.svg";
-import completeIcon from "../images/check-outline.svg";
 import editIcon from "../images/pencil-outline.svg";
+import completeIcon from "../images/check-outline.svg";
 import { projects } from "./project.js";
 
 
