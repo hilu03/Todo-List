@@ -145,7 +145,10 @@ export function sidebarDOM() {
 
   const displayDateInTodayIcon = () => {
     const todayIcon = document.querySelector(".today.icon-container");
-    const date = new Date().getDate();
+    let date = new Date().getDate();
+    if (date.length !== 2) {
+      date = "0" + date;
+    }
     const html = 
     `
       <div class="date">${date}</div>
