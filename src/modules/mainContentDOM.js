@@ -90,7 +90,7 @@ export function MainContentDOM() {
       editButton.addEventListener("click", () => {
         const isAddProjectFormOpen = document.querySelector(".add-project-container").classList.contains("display");
         const isAddTaskFormOpen = document.querySelector(".add-task-container").classList.contains("display");
-        if (!isAddProjectFormOpen && !isAddTaskFormOpen) {
+        if (!isAddProjectFormOpen && !isAddTaskFormOpen && !anyUpdateFormOpen()) {
           const projectIndex = Number(editContainer.dataset.projectId);
           const taskIndex = Number(editContainer.dataset.taskId);
           const task = projects[projectIndex].todoList[taskIndex];
