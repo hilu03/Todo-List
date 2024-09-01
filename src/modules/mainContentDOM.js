@@ -3,44 +3,52 @@ import toggleRight from "../images/chevron-right.svg";
 import deleteIcon from "../images/delete.svg";
 import completeIcon from "../images/check-outline.svg";
 import editIcon from "../images/pencil-outline.svg";
-import { projects, getAllProjectChoices } from "./project.js";
+import { projects } from "./project.js";
 
 
 export function MainContentDOM() {
   const contentContainer = document.querySelector(".content-container");
   const updateDivContainer = document.querySelector(".update-task-container");
 
+  const renderOneTask = (projectIndex, taskIndex) => {
+    const project = projects[projectIndex];
+    const task = project.todoList[taskIndex];
+    const html = 
+    `
+      <div class="task-card ${task.priority}-task">
+        <div class="complete" data-task-id="${taskIndex}" data-project-id="${projectIndex}"></div>
+        <div class="middle">
+          <div class="title">${task.title}</div>
+          <div class="due">${task.dueDate}</div>
+          <div class="project">
+            <span style="color: ${project.color}">#</span> ${project.name}
+          </div> 
+          <div class="description" data-task-id="${taskIndex}" data-project-id="${projectIndex}"></div>
+        </div>
+        <div class="right">
+          <div class="more" data-task-id="${taskIndex}" data-project-id="${projectIndex}" data-toggle="less">
+            <img src=${toggleRight}>
+          </div>
+          <div class="edit-container" data-task-id="${taskIndex}" data-project-id="${projectIndex}">
+            <img src=${editIcon}>
+          </div>
+          <div class="delete-container" data-task-id="${taskIndex}" data-project-id="${projectIndex}">
+            <img src=${deleteIcon}>
+          </div>
+        </div>
+      </div>
+    `;
+    return html;
+  };
+
   const displayTasks = () => {
-    let html = "";
+    let html = `<div class="task-container">`;
     projects.forEach((project, projectIndex) => {
       project.todoList.forEach((task, taskIndex) => {
-        html += 
-        `
-          <div class="task-card ${task.priority}-task">
-            <div class="complete" data-task-id="${taskIndex}" data-project-id="${projectIndex}"></div>
-            <div class="middle">
-              <div class="title">${task.title}</div>
-              <div class="due">${task.dueDate}</div>
-              <div class="project">
-                <span style="color: ${project.color}">#</span> ${project.name}
-              </div> 
-              <div class="description" data-task-id="${taskIndex}" data-project-id="${projectIndex}"></div>
-            </div>
-            <div class="right">
-              <div class="more" data-task-id="${taskIndex}" data-project-id="${projectIndex}" data-toggle="less">
-                <img src=${toggleRight}>
-              </div>
-              <div class="edit-container" data-task-id="${taskIndex}" data-project-id="${projectIndex}">
-                <img src=${editIcon}>
-              </div>
-              <div class="delete-container" data-task-id="${taskIndex}" data-project-id="${projectIndex}">
-                <img src=${deleteIcon}>
-              </div>
-            </div>
-          </div>
-        `;
+        html += renderOneTask(projectIndex, taskIndex);
       });
     });
+    html += "</div>"
     contentContainer.innerHTML = html;
   };
 
@@ -196,7 +204,21 @@ export function MainContentDOM() {
   };
 
   const displayTasksInProject = (projectIndex) => {
-    
+    const project = projects[projectIndex];
+    let html = 
+    `
+      <h2 style="color: ${project.color}">#${project.name}</h2>
+      <div class="task-container">
+    `;
+    project.todoList.forEach((task, taskIndex) => {
+      html += renderOneTask(projectIndex, taskIndex);
+    });
+    html += "</div>";
+    contentContainer.innerHTML = html;
+
+    expandTaskEvent();
+    deleteTask();
+    updateTaskForm();
   };
 
   return { displayAllTask, anyUpdateFormOpen, closeUpdateForm, displayTasksInProject };

@@ -13,18 +13,31 @@ export function sidebarDOM() {
   let isAddTaskFormOpen = false;
   const contentDisplay = MainContentDOM();
 
+  const viewTaskInProject = () => {
+    const projectDivs = document.querySelectorAll(".project-name");
+    projectDivs.forEach(project => {
+      project.addEventListener("click", () => {
+        if (!isAddTaskFormOpen && !isAddProjectFormOpen && !contentDisplay.anyUpdateFormOpen()) {
+          const projectIndex = Number(project.dataset.projectId);
+          contentDisplay.displayTasksInProject(projectIndex);
+        }
+      });
+    });
+  };
+
   const viewAllProject = () => {
     const container = document.querySelector(".view-projects");
     container.innerHTML = "";
-    projects.forEach(project => {
+    projects.forEach((project, projectIndex) => {
       const html =
       `
-        <div class="project-name"><span style="color: ${project.color}">#</span> ${project.name}</div>
+        <div class="project-name" data-project-id="${projectIndex}"><span style="color: ${project.color}">#</span> ${project.name}</div>
       `;
       container.innerHTML += html;
     });
     toggleOpen = true;
     toggleIcon.src = toggleDown;
+    viewTaskInProject();
   };
   
   const hideProject = () => {
