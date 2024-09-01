@@ -13,6 +13,8 @@ export function sidebarDOM() {
   let toggleOpen = true;
   let isAddProjectFormOpen = false;
   let isAddTaskFormOpen = false;
+  let choosing = "all-task";
+  let projectChoosingIndex = -1;
   const contentDisplay = MainContentDOM();
 
   const viewTaskInProject = () => {
@@ -22,6 +24,10 @@ export function sidebarDOM() {
         if (!isAddTaskFormOpen && !isAddProjectFormOpen && !contentDisplay.anyUpdateFormOpen()) {
           const projectIndex = Number(project.dataset.projectId);
           contentDisplay.displayTasksInProject(projectIndex);
+          document.querySelector(`.${choosing}`).classList.remove("choose");
+          project.classList.add("choose");
+          choosing = "project-name";
+          projectChoosingIndex = projectIndex;
         }
       });
     });
