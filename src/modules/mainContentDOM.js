@@ -77,10 +77,14 @@ export function MainContentDOM() {
     deleteContainers.forEach(deleteContainer => {
       const deleteButton = deleteContainer.firstElementChild;
       deleteButton.addEventListener("click", () => {
-        const projectIndex = Number(deleteContainer.dataset.projectId);
-        const taskIndex = Number(deleteContainer.dataset.taskId);
-        projects[projectIndex].todoList.splice(taskIndex, 1);
-        displayAllTask();
+        const isAddProjectFormOpen = document.querySelector(".add-project-container").classList.contains("display");
+        const isAddTaskFormOpen = document.querySelector(".add-task-container").classList.contains("display");
+        if (!isAddProjectFormOpen && !isAddTaskFormOpen && !anyUpdateFormOpen()) {
+          const projectIndex = Number(deleteContainer.dataset.projectId);
+          const taskIndex = Number(deleteContainer.dataset.taskId);
+          projects[projectIndex].todoList.splice(taskIndex, 1);
+          displayAllTask();  
+        }
       });
     });
 
