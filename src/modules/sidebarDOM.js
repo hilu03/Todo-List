@@ -34,7 +34,7 @@ export function sidebarDOM() {
       const html =
       `
         <div class="project-card">
-          <div class="project-name" data-project-id="${projectIndex} style="color: ${project.color}"">
+          <div class="project-name" data-project-id="${projectIndex}" style="color: ${project.color}">
             #${project.name}
           </div>
           <div class="right-side">
