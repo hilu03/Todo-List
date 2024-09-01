@@ -167,6 +167,8 @@ export function MainContentDOM() {
             const priority = document.querySelector("#update-task-priority").value;
         
             projects[projectIndex].todoList[taskIndex].updateTodo(title, description, dueDate, priority);
+            closeUpdateForm();
+            displayAllTask();
           });
           
         }
