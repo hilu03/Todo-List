@@ -3,7 +3,7 @@ import { Todo } from "./todo.js";
 export class Project {
   todoList = [];
 
-  constructor(name, color = "black") {
+  constructor(name, color = "#000000") {
     this.name = name;
     this.color = color;
   }

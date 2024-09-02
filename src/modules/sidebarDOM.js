@@ -67,7 +67,7 @@ export function sidebarDOM() {
           const html = 
           `
             <h2>Update your project</h2>
-            <form action="#" id="update-project-form">
+            <form action="#" id="update-project-form" data-project-id="${projectIndex}">
               <div class="input-update-project-name">
                 <label for="update-project-name">Project Name:</label>
                 <input type="text" name="update-project-name" id="update-project-name" placeholder="E.g: Summer workout" required minlength="5" value="${project.name}">
@@ -85,6 +85,9 @@ export function sidebarDOM() {
           updateProjectFormContainer.innerHTML = html;
           updateProjectFormContainer.classList.add("display");
           isUpdatingProjectFormOpen = true;
+
+          updateProject();
+          cancelUpdate();
         }
       });
     });
@@ -94,6 +97,27 @@ export function sidebarDOM() {
     updateProjectFormContainer.classList.remove("display");
     isUpdatingProjectFormOpen = false;
   };
+
+  const cancelUpdate = () => {
+    const cancelUpdateButton = document.querySelector(".cancel-update-project-button");
+    cancelUpdateButton.addEventListener("click", () => {
+      closeUpdateProjectForm();
+    });
+  };
+
+  const updateProject = () => {
+    const updateProjetcForm = document.querySelector("#update-project-form");
+    updateProjetcForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const name = document.querySelector("#update-project-name").value;
+      const color = document.querySelector("#update-project-color").value;
+      const projectIndex = Number(updateProjetcForm.dataset.projectId);
+      projects[projectIndex].updateProject(name, color);
+      closeUpdateProjectForm();
+      viewAllProject();
+    });
+  };
+
 
   const viewAllProject = () => {
     const container = document.querySelector(".view-projects");
@@ -196,6 +220,7 @@ export function sidebarDOM() {
       `;
     });
     projectSelect.innerHTML = html;
+    projectSelect.style.color = projects[0].color;
   };
   
   const openAddTaskForm = document.querySelector(".add-task");
@@ -217,12 +242,12 @@ export function sidebarDOM() {
   };
 
   const prioritySelect = document.querySelector("#task-priority");
-  let oldChoice = "low";
-  prioritySelect.classList.add(`${oldChoice}-priority`);
+  let oldPriority = "low";
+  prioritySelect.classList.add(`${oldPriority}-priority`);
   prioritySelect.addEventListener("change", () => {
-    prioritySelect.classList.remove(`${oldChoice}-priority`);
+    prioritySelect.classList.remove(`${oldPriority}-priority`);
     prioritySelect.classList.add(`${prioritySelect.value}-priority`);
-    oldChoice = prioritySelect.value;
+    oldPriority = prioritySelect.value;
   });
 
   projectSelect.addEventListener("change", () => {
