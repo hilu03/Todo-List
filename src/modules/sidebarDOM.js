@@ -31,6 +31,20 @@ export function sidebarDOM() {
     });
   };
 
+  const deleteProjects = () => {
+    const deleteProjectContainers = document.querySelectorAll(".delete-project-container");
+    deleteProjectContainers.forEach(container => {
+      const deleteButton = container.firstElementChild;
+      deleteButton.addEventListener("click", () => {
+        if (!isAddTaskFormOpen && !isAddProjectFormOpen && !contentDisplay.anyUpdateFormOpen()) {
+          const projectIndex = Number(container.dataset.projectId);
+          projects.splice(projectIndex, 1);
+          viewAllProject();
+        }
+      });
+    });  
+  };
+
   const viewAllProject = () => {
     const container = document.querySelector(".view-projects");
     container.innerHTML = "";
@@ -57,6 +71,7 @@ export function sidebarDOM() {
     toggleIcon.src = toggleDown;
 
     viewTaskInProject();
+    deleteProjects();
   };
 
   const allTaskDiv = document.querySelector(".all-task");
@@ -66,7 +81,6 @@ export function sidebarDOM() {
     allTaskDiv.classList.add("choose");
     choosing = "all-task";
   });
-  
   
   const hideProject = () => {
     const container = document.querySelector(".view-projects");
