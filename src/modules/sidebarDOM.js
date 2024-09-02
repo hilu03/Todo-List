@@ -14,7 +14,6 @@ export function sidebarDOM() {
   let isAddProjectFormOpen = false;
   let isAddTaskFormOpen = false;
   let choosing = "all-task";
-  let projectChoosingIndex = -1;
   const contentDisplay = MainContentDOM();
 
   const viewTaskInProject = () => {
@@ -27,7 +26,6 @@ export function sidebarDOM() {
           document.querySelector(`.${choosing}`).classList.remove("choose");
           project.classList.add("choose");
           choosing = "project-name";
-          projectChoosingIndex = projectIndex;
         }
       });
     });
@@ -60,6 +58,15 @@ export function sidebarDOM() {
 
     viewTaskInProject();
   };
+
+  const allTaskDiv = document.querySelector(".all-task");
+  allTaskDiv.addEventListener("click", () => {
+    contentDisplay.displayAllTask();
+    document.querySelector(`.${choosing}`).classList.remove("choose");
+    allTaskDiv.classList.add("choose");
+    choosing = "all-task";
+  });
+  
   
   const hideProject = () => {
     const container = document.querySelector(".view-projects");
