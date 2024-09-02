@@ -1,6 +1,7 @@
 .add-project-container,
 .add-task-container,
-.update-task-container {
+.update-task-container,
+.update-project-container {
   position: fixed;
   left: 600px;
   top: 150px;
@@ -27,11 +28,13 @@
 
 .add-project-container h2,
 .add-task-container h2,
-.update-task-container h2 {
+.update-task-container h2,
+.update-project-container h2 {
   text-align: center;
 }
 
-.input-project-name {
+.input-project-name,
+.input-update-project-name {
   margin-bottom: 20px;
   display: flex;
   flex-direction: column;
@@ -47,7 +50,8 @@
 .input-update-task-title input,
 .input-update-task-due input,
 .input-update-task-description textarea,
-.input-update-task-priority select {
+.input-update-task-priority select,
+.input-update-project-name input {
   padding: 10px;
   font-size: 16px;
 }
@@ -56,7 +60,8 @@
 .input-task-title input:invalid,
 .input-task-due input:invalid,
 .input-update-task-title input:invalid,
-.input-update-task-due input:invalid {
+.input-update-task-due input:invalid,
+.input-update-project-name input:invalid {
   border: 2px solid red;
 }
 
@@ -64,7 +69,8 @@
 .input-task-title input:focus,
 .input-task-due input:focus,
 .input-update-task-title input:focus,
-.input-update-task-due input:focus {
+.input-update-task-due input:focus,
+.input-update-project-name input:focus {
   border: 2px solid blue;
   outline: none;
 }
@@ -74,20 +80,23 @@
 .input-task-title input:valid,
 .input-task-due input:valid,
 .input-update-task-title input:valid,
-.input-update-task-due input:valid {
+.input-update-task-due input:valid,
+.input-update-project-name input:valid {
   border: 2px solid green;
   outline: none;
 }
 
 
-.input-project-color {
+.input-project-color,
+.input-update-project-color {
   display: flex;
   align-items: center;
   gap: 20px;
   margin-bottom: 20px;
 }
 
-.input-project-color input {
+.input-project-color input,
+.input-update-project-color input {
   border: none;
   padding: 0;
 }
@@ -96,7 +105,8 @@ label {
   font-weight: bold;
 }
 
-.project-button-container {
+.project-button-container,
+.update-project-button-container {
   display: flex;
   justify-content: space-between;
 }
@@ -106,7 +116,9 @@ label {
 .cancel-project-button,
 .cancel-task-button,
 .update-task-button,
-.cancel-update-task-button {
+.cancel-update-task-button,
+.update-project-button,
+.cancel-update-project-button {
   padding: 10px 20px;
   border: none;
   border-radius: 20px;
@@ -119,19 +131,23 @@ label {
 .cancel-project-button:hover,
 .cancel-task-button:hover,
 .update-task-button:hover,
-.cancel-update-task-button:hover {
+.cancel-update-task-button:hover,
+.update-project-button:hover,
+.cancel-update-project-button:hover {
   opacity: 0.7;
 }
 
 .create-project-button,
 .create-task-button,
-.update-task-button {
+.update-task-button,
+.update-project-button {
   background-color: gold;
 }
 
 .cancel-project-button,
 .cancel-task-button,
-.cancel-update-task-button {
+.cancel-update-task-button,
+.cancel-update-project-button {
   background-color: red;
   color: white;
 }

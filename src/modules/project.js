@@ -11,6 +11,11 @@ export class Project {
   addTodo(todo) {
     this.todoList.push(todo);
   }
+
+  updateProject(name, color) {
+    this.name = name;
+    this.color = color;
+  }
 };
 
 export const projects = [];

@@ -13,6 +13,7 @@ export function sidebarDOM() {
   let toggleOpen = true;
   let isAddProjectFormOpen = false;
   let isAddTaskFormOpen = false;
+  let isUpdatingProjectFormOpen = false;
   let choosing = "all-task";
   const contentDisplay = MainContentDOM();
 
@@ -20,7 +21,10 @@ export function sidebarDOM() {
     const projectDivs = document.querySelectorAll(".project-name");
     projectDivs.forEach(project => {
       project.addEventListener("click", () => {
-        if (!isAddTaskFormOpen && !isAddProjectFormOpen && !contentDisplay.anyUpdateFormOpen()) {
+        if (!isAddTaskFormOpen && !isAddProjectFormOpen 
+          && !contentDisplay.anyUpdateFormOpen()
+          && !isUpdatingProjectFormOpen) 
+        {
           const projectIndex = Number(project.dataset.projectId);
           contentDisplay.displayTasksInProject(projectIndex);
           document.querySelector(`.${choosing}`).classList.remove("choose");
@@ -36,13 +40,59 @@ export function sidebarDOM() {
     deleteProjectContainers.forEach(container => {
       const deleteButton = container.firstElementChild;
       deleteButton.addEventListener("click", () => {
-        if (!isAddTaskFormOpen && !isAddProjectFormOpen && !contentDisplay.anyUpdateFormOpen()) {
+        if (!isAddTaskFormOpen && !isAddProjectFormOpen 
+          && !contentDisplay.anyUpdateFormOpen()
+          && !isUpdatingProjectFormOpen) 
+        {
           const projectIndex = Number(container.dataset.projectId);
           projects.splice(projectIndex, 1);
           viewAllProject();
         }
       });
     });  
+  };
+
+  const updateProjectFormContainer = document.querySelector(".update-project-container");
+  const updateProjects = () => {
+    const updateProjectContainers = document.querySelectorAll(".edit-project-container");
+    updateProjectContainers.forEach(container => {
+      const updateButton = container.firstElementChild;
+      updateButton.addEventListener("click", () => {
+        if (!isAddTaskFormOpen && !isAddProjectFormOpen 
+          && !contentDisplay.anyUpdateFormOpen()
+          && !isUpdatingProjectFormOpen) 
+        {
+          const projectIndex = Number(container.dataset.projectId);
+          const project = projects[projectIndex];
+          const html = 
+          `
+            <h2>Update your project</h2>
+            <form action="#" id="update-project-form">
+              <div class="input-update-project-name">
+                <label for="update-project-name">Project Name:</label>
+                <input type="text" name="update-project-name" id="update-project-name" placeholder="E.g: Summer workout" required minlength="5" value="${project.name}">
+              </div>
+              <div class="input-update-project-color">
+                <label for="update-project-color">Color:</label>
+                <input type="color" id="update-project-color" value="${project.color}">
+              </div>
+              <div class="update-project-button-container">
+                <button class="update-project-button" type="submit">Update</button>
+                <button class="cancel-update-project-button" type="button">Cancel</button>
+              </div>  
+            </form>
+          `;
+          updateProjectFormContainer.innerHTML = html;
+          updateProjectFormContainer.classList.add("display");
+          isUpdatingProjectFormOpen = true;
+        }
+      });
+    });
+  };
+
+  const closeUpdateProjectForm = () => {
+    updateProjectFormContainer.classList.remove("display");
+    isUpdatingProjectFormOpen = false;
   };
 
   const viewAllProject = () => {
@@ -71,6 +121,7 @@ export function sidebarDOM() {
     toggleIcon.src = toggleDown;
 
     viewTaskInProject();
+    updateProjects();
     deleteProjects();
   };
 
@@ -105,7 +156,10 @@ export function sidebarDOM() {
   const openAddProjectForm = document.querySelector(".add-project");
   const addProjectFormContainer = document.querySelector(".add-project-container");
   openAddProjectForm.addEventListener("click", () => {
-    if (!isAddTaskFormOpen && !isAddProjectFormOpen && !contentDisplay.anyUpdateFormOpen()) {
+    if (!isAddTaskFormOpen && !isAddProjectFormOpen 
+      && !contentDisplay.anyUpdateFormOpen()
+      && !isUpdatingProjectFormOpen) 
+    {
       addProjectFormContainer.classList.add("display");
       isAddProjectFormOpen = true;   
     }
@@ -147,7 +201,10 @@ export function sidebarDOM() {
   const openAddTaskForm = document.querySelector(".add-task");
   const addTaskFormContainer = document.querySelector(".add-task-container");
   openAddTaskForm.addEventListener("click", () => {
-    if (!isAddTaskFormOpen && !isAddProjectFormOpen && !contentDisplay.anyUpdateFormOpen()) {
+    if (!isAddTaskFormOpen && !isAddProjectFormOpen 
+      && !contentDisplay.anyUpdateFormOpen()
+      && !isUpdatingProjectFormOpen) 
+    {
       addTaskFormContainer.classList.add("display");
       isAddTaskFormOpen = true;
       displayAllProjectsToSelect();
@@ -180,14 +237,19 @@ export function sidebarDOM() {
   });
   
   window.addEventListener("keydown", (e) => {
-    if (isAddProjectFormOpen && e.key === "Escape") {
-      closeAddProjectForm();
-    }
-    else if (isAddTaskFormOpen && e.key === "Escape") {
-      closeAddTaskForm();
-    }
-    else if (contentDisplay.anyUpdateFormOpen() && e.key === "Escape") {
-      contentDisplay.closeUpdateForm();
+    if (e.key === "Escape") {
+      if (isAddProjectFormOpen) {
+        closeAddProjectForm();
+      }
+      else if (isAddTaskFormOpen) {
+        closeAddTaskForm();
+      }
+      else if (contentDisplay.anyUpdateFormOpen()) {
+        contentDisplay.closeUpdateForm();
+      }
+      else if (isUpdatingProjectFormOpen) {
+        closeUpdateProjectForm();
+      }  
     }
   });
 
