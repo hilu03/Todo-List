@@ -15,6 +15,7 @@ export function sidebarDOM() {
   let isAddTaskFormOpen = false;
   let isUpdatingProjectFormOpen = false;
   let choosing = "all-task";
+  let projectIndexChoosingTab = -1;
   const contentDisplay = MainContentDOM();
 
   const viewTaskInProject = () => {
@@ -30,6 +31,7 @@ export function sidebarDOM() {
           document.querySelector(`.${choosing}`).classList.remove("choose");
           project.classList.add("choose");
           choosing = "project-name";
+          projectIndexChoosingTab = projectIndex;
         }
       });
     });
@@ -47,6 +49,16 @@ export function sidebarDOM() {
           const projectIndex = Number(container.dataset.projectId);
           projects.splice(projectIndex, 1);
           viewAllProject();
+          if (choosing === "all-task") {
+            contentDisplay.displayAllTask();
+          }
+          else if (choosing === "completed-tasks") {
+            contentDisplay.displayCompletedTasks();
+          }
+          else if (choosing === "project-name" && projectIndexChoosingTab === projectIndex) {
+            contentDisplay.displayAllTask();
+            changeTabChoosing("all-task");
+          }
         }
       });
     });  
@@ -156,11 +168,21 @@ export function sidebarDOM() {
       && !isUpdatingProjectFormOpen)
     {
       contentDisplay.displayAllTask();
-      document.querySelector(`.${choosing}`).classList.remove("choose");
-      allTaskDiv.classList.add("choose");
-      choosing = "all-task";  
+      changeTabChoosing("all-task");
     }
   });
+
+  const changeTabChoosing = (newTab) => {
+    const choosingTab = document.querySelector(`.${choosing}`);
+    if (choosingTab) {
+      choosingTab.classList.remove("choose");
+    }
+    else {
+      projectIndexChoosingTab = -1;
+    }
+    document.querySelector(`.${newTab}`).classList.add("choose");
+    choosing = newTab;    
+  };
   
   const completedTasks = document.querySelector(".completed-tasks");
   completedTasks.addEventListener("click", () => {
@@ -169,9 +191,7 @@ export function sidebarDOM() {
       && !isUpdatingProjectFormOpen)
     {
       contentDisplay.displayCompletedTasks();
-      document.querySelector(`.${choosing}`).classList.remove("choose");
-      completedTasks.classList.add("choose");
-      choosing = "completed-tasks";
+      changeTabChoosing("completed-tasks");
     }
   });
 

@@ -108,7 +108,13 @@ export function MainContentDOM() {
           const projectIndex = Number(deleteContainer.dataset.projectId);
           const taskIndex = Number(deleteContainer.dataset.taskId);
           projects[projectIndex].todoList.splice(taskIndex, 1);
-          displayAllTask();  
+          const choosingTab = document.querySelector(".choose");
+          if (choosingTab.classList.contains("completed-tasks")) {
+            displayCompletedTasks();
+          }
+          else {
+            displayAllTask();  
+          }
         }
       });
     });
@@ -252,7 +258,7 @@ export function MainContentDOM() {
       });
     });
     html += "</div>";
-    
+
     contentContainer.innerHTML = html;
     const completeDivs = document.querySelectorAll(".complete");
     html = `<img src=${completeIcon}>`;
