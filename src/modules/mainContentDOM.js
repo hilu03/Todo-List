@@ -251,13 +251,18 @@ export function MainContentDOM() {
         html += renderOneTask(projectIndex, taskList.indexOf(task));
       });
     });
-    html += "</div>"
+    html += "</div>";
+    
     contentContainer.innerHTML = html;
     const completeDivs = document.querySelectorAll(".complete");
     html = `<img src=${completeIcon}>`;
     completeDivs.forEach(div => {
       div.innerHTML = html;
     });
+
+    expandTaskEvent();
+    deleteTask();
+    updateTaskForm();
   };
 
   return { displayAllTask, anyUpdateFormOpen, closeUpdateForm, displayTasksInProject, displayCompletedTasks };

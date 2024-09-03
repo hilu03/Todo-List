@@ -248,9 +248,14 @@ export function sidebarDOM() {
       && !contentDisplay.anyUpdateFormOpen()
       && !isUpdatingProjectFormOpen) 
     {
-      addTaskFormContainer.classList.add("display");
-      isAddTaskFormOpen = true;
-      displayAllProjectsToSelect();
+      if (projects.length !== 0) {
+        addTaskFormContainer.classList.add("display");
+        isAddTaskFormOpen = true;
+        displayAllProjectsToSelect();  
+      }
+      else {
+        alert("Please create a project first!");
+      }
     }
   });
 
