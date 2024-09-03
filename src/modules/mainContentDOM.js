@@ -41,11 +41,27 @@ export function MainContentDOM() {
     return html;
   };
 
+  const completeTask = () => {
+    const completeButtons = document.querySelectorAll(".complete");
+    completeButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        if (!anySidebarFormOpen() && !anyUpdateFormOpen()) {
+          const taskIndex = Number(button.dataset.taskId);
+          const projectIndex = Number(button.dataset.projectId);
+          projects[projectIndex].todoList[taskIndex].completeTodo();
+          displayAllTask();
+          console.log(projects);
+        }
+      });
+    });
+  };
+
   const displayTasks = () => {
     let html = `<div class="task-container">`;
     projects.forEach((project, projectIndex) => {
-      project.todoList.forEach((task, taskIndex) => {
-        html += renderOneTask(projectIndex, taskIndex);
+      const taskList = project.todoList;
+      taskList.filter(todo => !todo.complete).forEach((task) => {
+        html += renderOneTask(projectIndex, taskList.indexOf(task));
       });
     });
     html += "</div>"
@@ -122,14 +138,19 @@ export function MainContentDOM() {
     });
   };
 
+  const anySidebarFormOpen = () => {
+    const isAddProjectFormOpen = document.querySelector(".add-project-container").classList.contains("display");
+    const isAddTaskFormOpen = document.querySelector(".add-task-container").classList.contains("display");
+    const isUpdateProjectFormOpen = document.querySelector(".update-project-container").classList.contains("display");
+    return isAddProjectFormOpen && isAddTaskFormOpen && isUpdateProjectFormOpen;
+  }
+
   const updateTaskForm = () => {
     const editContainers = document.querySelectorAll(".edit-container");
     editContainers.forEach(editContainer => {
       const editButton = editContainer.firstElementChild;
       editButton.addEventListener("click", () => {
-        const isAddProjectFormOpen = document.querySelector(".add-project-container").classList.contains("display");
-        const isAddTaskFormOpen = document.querySelector(".add-task-container").classList.contains("display");
-        if (!isAddProjectFormOpen && !isAddTaskFormOpen && !anyUpdateFormOpen()) {
+        if (!anySidebarFormOpen() && !anyUpdateFormOpen()) {
           const projectIndex = Number(editContainer.dataset.projectId);
           const taskIndex = Number(editContainer.dataset.taskId);
           const task = projects[projectIndex].todoList[taskIndex];
@@ -201,6 +222,7 @@ export function MainContentDOM() {
     expandTaskEvent();
     deleteTask();
     updateTaskForm();
+    completeTask();
   };
 
   const displayTasksInProject = (projectIndex) => {
