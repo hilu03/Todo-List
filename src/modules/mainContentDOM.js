@@ -253,6 +253,11 @@ export function MainContentDOM() {
     });
     html += "</div>"
     contentContainer.innerHTML = html;
+    const completeDivs = document.querySelectorAll(".complete");
+    html = `<img src=${completeIcon}>`;
+    completeDivs.forEach(div => {
+      div.innerHTML = html;
+    });
   };
 
   return { displayAllTask, anyUpdateFormOpen, closeUpdateForm, displayTasksInProject, displayCompletedTasks };
