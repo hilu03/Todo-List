@@ -151,12 +151,30 @@ export function sidebarDOM() {
 
   const allTaskDiv = document.querySelector(".all-task");
   allTaskDiv.addEventListener("click", () => {
-    contentDisplay.displayAllTask();
-    document.querySelector(`.${choosing}`).classList.remove("choose");
-    allTaskDiv.classList.add("choose");
-    choosing = "all-task";
+    if (!isAddTaskFormOpen && !isAddProjectFormOpen 
+      && !contentDisplay.anyUpdateFormOpen()
+      && !isUpdatingProjectFormOpen)
+    {
+      contentDisplay.displayAllTask();
+      document.querySelector(`.${choosing}`).classList.remove("choose");
+      allTaskDiv.classList.add("choose");
+      choosing = "all-task";  
+    }
   });
   
+  const completedTasks = document.querySelector(".completed-tasks");
+  completedTasks.addEventListener("click", () => {
+    if (!isAddTaskFormOpen && !isAddProjectFormOpen 
+      && !contentDisplay.anyUpdateFormOpen()
+      && !isUpdatingProjectFormOpen)
+    {
+      contentDisplay.displayCompletedTasks();
+      document.querySelector(`.${choosing}`).classList.remove("choose");
+      completedTasks.classList.add("choose");
+      choosing = "completed-tasks";
+    }
+  });
+
   const hideProject = () => {
     const container = document.querySelector(".view-projects");
     container.innerHTML = "";
@@ -305,6 +323,8 @@ export function sidebarDOM() {
     todayIcon.innerHTML += html;
   };
   displayDateInTodayIcon();
+
+  
 
   return { viewAllProject };
 }

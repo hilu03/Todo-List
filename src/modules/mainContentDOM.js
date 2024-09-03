@@ -56,7 +56,7 @@ export function MainContentDOM() {
     });
   };
 
-  const displayTasks = () => {
+  const displayUnfinishedTasks = () => {
     let html = `<div class="task-container">`;
     projects.forEach((project, projectIndex) => {
       const taskList = project.todoList;
@@ -218,7 +218,7 @@ export function MainContentDOM() {
   };
 
   const displayAllTask = () => {
-    displayTasks();
+    displayUnfinishedTasks();
     expandTaskEvent();
     deleteTask();
     updateTaskForm();
@@ -243,5 +243,17 @@ export function MainContentDOM() {
     updateTaskForm();
   };
 
-  return { displayAllTask, anyUpdateFormOpen, closeUpdateForm, displayTasksInProject };
+  const displayCompletedTasks = () => {
+    let html = `<div class="task-container">`;
+    projects.forEach((project, projectIndex) => {
+      const taskList = project.todoList;
+      taskList.filter(todo => todo.complete).forEach((task) => {
+        html += renderOneTask(projectIndex, taskList.indexOf(task));
+      });
+    });
+    html += "</div>"
+    contentContainer.innerHTML = html;
+  };
+
+  return { displayAllTask, anyUpdateFormOpen, closeUpdateForm, displayTasksInProject, displayCompletedTasks };
 }
