@@ -52,6 +52,10 @@ export function sidebarDOM() {
       contentDisplay.getTodayTasks();
       changeTabChoosing("today-task");
     }
+    else if (choosing === "overdue-task") {
+      contentDisplay.getOverdueTasks();
+      changeTabChoosing("overdue-task");
+    }
   };
 
   const deleteProjects = () => {
@@ -362,6 +366,12 @@ export function sidebarDOM() {
   todayButton.addEventListener("click", () => {
     contentDisplay.getTodayTasks();
     changeTabChoosing("today-task");
+  });
+
+  const overdueButton = document.querySelector(".overdue-task");
+  overdueButton.addEventListener("click", () => {
+    contentDisplay.getOverdueTasks();
+    changeTabChoosing("overdue-task");
   });
 
   return { viewAllProject };

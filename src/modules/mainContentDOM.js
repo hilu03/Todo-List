@@ -312,5 +312,24 @@ export function MainContentDOM() {
     completeTask();
   };
 
-  return { displayAllTask, anyUpdateFormOpen, closeUpdateForm, displayTasksInProject, displayCompletedTasks, getTodayTasks };
+  const getOverdueTasks = () => {
+    let html = `<div class="task-container">`;
+    projects.forEach((project, projectIndex) => {
+      const taskList = project.todoList;
+      taskList.filter(todo => !todo.complete && compareDateWithToday(todo) === 1).forEach((task) => {
+        html += renderOneTask(projectIndex, taskList.indexOf(task));
+      });
+    });
+    html += "</div>";
+
+    contentContainer.innerHTML = html;
+
+    expandTaskEvent();
+    deleteTask();
+    updateTaskForm();
+    completeTask();
+  };
+
+  return { displayAllTask, anyUpdateFormOpen, closeUpdateForm, displayTasksInProject,
+           displayCompletedTasks, getTodayTasks, getOverdueTasks };
 }
