@@ -39,6 +39,20 @@ h1 {
 .title,
 .project {
   word-break: break-all;
+  font-weight: bold;
+}
+
+.title {
+  text-decoration: underline;
+  font-size: 18px;
+}
+
+.description {
+  word-break: break-all;
+}
+
+.due {
+  font-style: italic;
 }
 
 .low-task {
@@ -98,3 +112,6 @@ h1 {
   display: block;
 }
 
+h2.project-name-display {
+  margin-left: 50px;
+}

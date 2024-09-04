@@ -28,7 +28,12 @@ export function sidebarDOM() {
         {
           const projectIndex = Number(project.dataset.projectId);
           contentDisplay.displayTasksInProject(projectIndex);
-          document.querySelector(`.${choosing}`).classList.remove("choose");
+          if (choosing === "project-name") {
+            document.querySelectorAll(".project-name")[projectIndexChoosingTab].classList.remove("choose");
+          }
+          else {
+            document.querySelector(`.${choosing}`).classList.remove("choose");
+          }
           project.classList.add("choose");
           choosing = "project-name";
           projectIndexChoosingTab = projectIndex;
@@ -44,9 +49,9 @@ export function sidebarDOM() {
     else if (choosing === "completed-tasks") {
       contentDisplay.displayCompletedTasks();
     }
-    else if (choosing === "project-name" && projectIndexChoosingTab === projectIndex) {
-      contentDisplay.displayAllTask();
-      changeTabChoosing("all-task");
+    else if (choosing === "project-name") {
+      contentDisplay.displayTasksInProject(projectIndexChoosingTab);
+      changeTabChoosing("project-name");
     }
     else if (choosing === "today-task") {
       contentDisplay.getTodayTasks();

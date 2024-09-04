@@ -22,7 +22,7 @@ export function MainContentDOM() {
           <div class="title">${task.title}</div>
           <div class="due">${task.dueDate}</div>
           <div class="project">
-            <span style="color: ${project.color}">#</span> ${project.name}
+            <span style="color: ${project.color}">#</span>${project.name}
           </div> 
           <div class="description" data-task-id="${taskIndex}" data-project-id="${projectIndex}"></div>
         </div>
@@ -104,7 +104,8 @@ export function MainContentDOM() {
         const editButton = button.nextElementSibling;
         const deleteButton = editButton.nextElementSibling;
         if (button.dataset.toggle === "less") {
-          description.textContent = projects[projectIndex].todoList[taskIndex].description;
+          description.textContent = "Description:\n" + projects[projectIndex].todoList[taskIndex].description;
+          console.log(projects[projectIndex].todoList[taskIndex].description);
           icon.src = toggleDown;
           button.dataset.toggle = "more"; 
           editButton.classList.add("display");
@@ -132,13 +133,7 @@ export function MainContentDOM() {
           const projectIndex = Number(deleteContainer.dataset.projectId);
           const taskIndex = Number(deleteContainer.dataset.taskId);
           projects[projectIndex].todoList.splice(taskIndex, 1);
-          const choosingTab = document.querySelector(".choose");
-          if (choosingTab.classList.contains("completed-tasks")) {
-            displayCompletedTasks();
-          }
-          else {
-            displayAllTask();  
-          }
+          reloadContent();
         }
       });
     });
@@ -259,7 +254,7 @@ export function MainContentDOM() {
     const project = projects[projectIndex];
     let html = 
     `
-      <h2 style="color: ${project.color}">#${project.name}</h2>
+      <h2 class="project-name-display" style="color: ${project.color}">#${project.name}</h2>
       <div class="task-container">
     `;
     project.todoList.forEach((task, taskIndex) => {
