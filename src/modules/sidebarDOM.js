@@ -15,7 +15,7 @@ export function sidebarDOM() {
   let isAddTaskFormOpen = false;
   let isUpdatingProjectFormOpen = false;
   let choosing = "all-task";
-  let projectIndexChoosingTab = -1;
+  // let projectIndexChoosingTab = -1;
   const contentDisplay = MainContentDOM();
 
   const viewTaskInProject = () => {
@@ -28,15 +28,15 @@ export function sidebarDOM() {
         {
           const projectIndex = Number(project.dataset.projectId);
           contentDisplay.displayTasksInProject(projectIndex);
-          if (choosing === "project-name") {
-            document.querySelectorAll(".project-name")[projectIndexChoosingTab].classList.remove("choose");
-          }
-          else {
-            document.querySelector(`.${choosing}`).classList.remove("choose");
-          }
-          project.classList.add("choose");
-          choosing = "project-name";
-          projectIndexChoosingTab = projectIndex;
+          // if (choosing === "project-name") {
+          //   document.querySelectorAll(".project-name")[projectIndexChoosingTab].classList.remove("choose");
+          // }
+          // else {
+          //   document.querySelector(`.${choosing}`).classList.remove("choose");
+          // }
+          // project.classList.add("choose");
+          // choosing = "project-name";
+          // projectIndexChoosingTab = projectIndex;
         }
       });
     });
