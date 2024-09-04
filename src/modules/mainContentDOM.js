@@ -17,7 +17,7 @@ export function MainContentDOM() {
     const html = 
     `
       <div class="task-card ${task.priority}-task">
-        <div class="complete" data-task-id="${taskIndex}" data-project-id="${projectIndex}"></div>
+        <div class="complete ${task.complete? "completed": ""}" data-task-id="${taskIndex}" data-project-id="${projectIndex}"></div>
         <div class="middle">
           <div class="title">${task.title}</div>
           <div class="due">${task.dueDate}</div>
@@ -53,6 +53,12 @@ export function MainContentDOM() {
     else if (choosing.classList.contains("today-task")) {
       getTodayTasks();
     }
+    else if (choosing.classList.contains("overdue-task")) {
+      getOverdueTasks();
+    }
+    else if (choosing.classList.contains("upcoming-task")) {
+      getUpcomingTasks();
+    }
     else if (choosing.classList.contains("project-name")) {
       const projectIndex = Number(choosing.dataset.projectId);
       displayTasksInProject(projectIndex);
@@ -68,6 +74,7 @@ export function MainContentDOM() {
           const projectIndex = Number(button.dataset.projectId);
           projects[projectIndex].todoList[taskIndex].completeTodo();
           reloadContent();
+          button.classList.add("completed");
         }
       });
     });
@@ -261,9 +268,18 @@ export function MainContentDOM() {
     html += "</div>";
     contentContainer.innerHTML = html;
 
+    addCompleteIcon();
     expandTaskEvent();
     deleteTask();
     updateTaskForm();
+  };
+
+  const addCompleteIcon = () => {
+    const completeDivs = document.querySelectorAll(".completed");
+    const html = `<img src=${completeIcon}>`;
+    completeDivs.forEach(div => {
+      div.innerHTML = html;
+    });
   };
 
   const displayCompletedTasks = () => {
@@ -275,15 +291,9 @@ export function MainContentDOM() {
       });
     });
     html += "</div>";
-
     contentContainer.innerHTML = html;
-
-    const completeDivs = document.querySelectorAll(".complete");
-    html = `<img src=${completeIcon}>`;
-    completeDivs.forEach(div => {
-      div.innerHTML = html;
-    });
-
+    
+    addCompleteIcon();
     expandTaskEvent();
     deleteTask();
     updateTaskForm();
@@ -330,6 +340,24 @@ export function MainContentDOM() {
     completeTask();
   };
 
+  const getUpcomingTasks = () => {
+    let html = `<div class="task-container">`;
+    projects.forEach((project, projectIndex) => {
+      const taskList = project.todoList;
+      taskList.filter(todo => !todo.complete && compareDateWithToday(todo) !== 1).forEach((task) => {
+        html += renderOneTask(projectIndex, taskList.indexOf(task));
+      });
+    });
+    html += "</div>";
+
+    contentContainer.innerHTML = html;
+
+    expandTaskEvent();
+    deleteTask();
+    updateTaskForm();
+    completeTask();
+  };
+
   return { displayAllTask, anyUpdateFormOpen, closeUpdateForm, displayTasksInProject,
-           displayCompletedTasks, getTodayTasks, getOverdueTasks };
+           displayCompletedTasks, getTodayTasks, getOverdueTasks, getUpcomingTasks };
 }

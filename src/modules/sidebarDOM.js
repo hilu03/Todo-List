@@ -56,6 +56,10 @@ export function sidebarDOM() {
       contentDisplay.getOverdueTasks();
       changeTabChoosing("overdue-task");
     }
+    else if (choosing === "upcoming-task") {
+      contentDisplay.getUpcomingTasks();
+      changeTabChoosing("upcoming-task");
+    }
   };
 
   const deleteProjects = () => {
@@ -372,6 +376,12 @@ export function sidebarDOM() {
   overdueButton.addEventListener("click", () => {
     contentDisplay.getOverdueTasks();
     changeTabChoosing("overdue-task");
+  });
+
+  const upcomingButton = document.querySelector(".upcoming-task");
+  upcomingButton.addEventListener("click", () => {
+    contentDisplay.getUpcomingTasks();
+    changeTabChoosing("upcoming-task");
   });
 
   return { viewAllProject };
