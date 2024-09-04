@@ -2,7 +2,7 @@ import toggleDown from "../images/chevron-down.svg";
 import toggleRight from "../images/chevron-right.svg";
 import deleteIcon from "../images/delete.svg";
 import editIcon from "../images/pencil-outline.svg";
-import { Project, projects } from "./project.js";
+import { Project, projects, saveToStorage } from "./project.js";
 import { Todo } from "./todo.js";
 import { MainContentDOM } from "./mainContentDOM.js";
 
@@ -78,6 +78,7 @@ export function sidebarDOM() {
         {
           const projectIndex = Number(container.dataset.projectId);
           projects.splice(projectIndex, 1);
+          saveToStorage();
           viewAllProject();
           reloadContent();
         }
@@ -146,6 +147,7 @@ export function sidebarDOM() {
       const color = document.querySelector("#update-project-color").value;
       const projectIndex = Number(updateProjetcForm.dataset.projectId);
       projects[projectIndex].updateProject(name, color);
+      saveToStorage();
       closeUpdateProjectForm();
       viewAllProject();
       reloadContent();
@@ -266,6 +268,7 @@ export function sidebarDOM() {
     const color = document.querySelector("#project-color").value;
     const project = new Project(name, color);
     projects.push(project);
+    saveToStorage();
     viewAllProject();
     closeAddProjectForm();
   });
@@ -353,6 +356,7 @@ export function sidebarDOM() {
     const priority = document.querySelector("#task-priority").value;
     const task = new Todo(title, description, due, priority);
     projects[projectIndex].todoList.push(task);
+    saveToStorage();
     closeAddTaskForm();
     contentDisplay.displayAllTask();
   });

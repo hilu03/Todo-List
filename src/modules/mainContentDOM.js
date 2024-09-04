@@ -3,7 +3,7 @@ import toggleRight from "../images/chevron-right.svg";
 import deleteIcon from "../images/delete.svg";
 import editIcon from "../images/pencil-outline.svg";
 import completeIcon from "../images/check-outline.svg";
-import { projects } from "./project.js";
+import { projects, saveToStorage } from "./project.js";
 import { compareAsc } from "date-fns";
 
 
@@ -73,6 +73,7 @@ export function MainContentDOM() {
           const taskIndex = Number(button.dataset.taskId);
           const projectIndex = Number(button.dataset.projectId);
           projects[projectIndex].todoList[taskIndex].completeTodo();
+          saveToStorage();
           reloadContent();
           button.classList.add("completed");
         }
@@ -133,6 +134,7 @@ export function MainContentDOM() {
           const projectIndex = Number(deleteContainer.dataset.projectId);
           const taskIndex = Number(deleteContainer.dataset.taskId);
           projects[projectIndex].todoList.splice(taskIndex, 1);
+          saveToStorage();
           reloadContent();
         }
       });
@@ -158,6 +160,7 @@ export function MainContentDOM() {
       const priority = document.querySelector("#update-task-priority").value;
   
       projects[projectIndex].todoList[taskIndex].updateTodo(title, description, dueDate, priority);
+      saveToStorage();
       closeUpdateForm();
       reloadContent();
     });
@@ -364,6 +367,7 @@ export function MainContentDOM() {
           const taskIndex = Number(button.dataset.taskId);
           const projectIndex = Number(button.dataset.projectId);
           projects[projectIndex].todoList[taskIndex].undoTodo();
+          saveToStorage();
           button.classList.remove("completed");
           reloadContent();
         }
