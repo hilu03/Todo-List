@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo List</title>
+<script defer src="main.js"></script></head>
+<body>
+  <div class="container">
+
+    <div class="sidebar">
+
+      <div class="row choose all-task">
+        <div class="icon-container logo">
+          <img src="c5eb10ec2c7b9149200c.png">
+        </div>
+        <div class="icon-name logo-name">Todo List</div>  
+      </div>
+
+      <div class="row add-task">
+        <div class="icon-container">
+          <img src="057fbbe813d06c74ac0c.svg">
+        </div>
+        <div class="icon-name">Add task</div>  
+      </div>
+
+      <div class="row today-task">
+        <div class="icon-container today">
+          <img src="2bfc126c976ac859a6a9.svg">
+        </div>
+        <div class="icon-name">Today</div>  
+      </div>
+
+      <div class="row upcoming-task">
+        <div class="icon-container">
+          <img src="18f552623324e58156e6.svg">
+        </div>
+        <div class="icon-name">Upcoming</div>  
+      </div>
+
+      <div class="row completed-tasks">
+        <div class="icon-container">
+          <img src="7627dfa4976d51ee938e.svg">
+        </div>
+        <div class="icon-name">Completed</div>  
+      </div>
+
+      <div class="row overdue-task">
+        <div class="icon-container">
+          <img src="82551d8ca1de7346bc95.svg">
+        </div>
+        <div class="icon-name">Overdue</div>  
+      </div>
+
+      <div class="projects">
+        <div class="">My Projects</div>
+        <div class="right-side">
+          <div class="add-project">
+            <img src="3cffe9a515498593b872.svg">
+          </div>
+          <div class="toggle-project">
+            <img src="da1d4548b671a011dfa4.svg">
+          </div>  
+        </div>
+      </div>
+      <div class="view-projects"></div>
+    </div>
+
+    <div class="add-project-container">
+      <h2>Create your new project</h2>
+      <form action="#" id="add-project-form">
+        <div class="input-project-name">
+          <label for="project-name">Project Name:</label>
+          <input type="text" name="project-name" id="project-name" placeholder="E.g: Summer workout" required minlength="5">
+        </div>
+        <div class="input-project-color">
+          <label for="project-color">Color:</label>
+          <input type="color" id="project-color">
+        </div>
+        <div class="project-button-container">
+          <button class="create-project-button" type="submit">Create</button>
+          <button class="cancel-project-button" type="button">Cancel</button>
+        </div>  
+      </form>
+    </div>
+
+    <div class="add-task-container">
+      <h2>Create your new task</h2>
+      <form action="#" id="add-task-form">
+        <div class="input-task-title">
+          <label for="task-title">Title:</label>
+          <input type="text" name="task-title" id="task-title" required minlength="3" placeholder="E.g: Warm up" >
+        </div>
+        <div class="input-task-description">
+          <label for="task-description">Description:</label>
+          <textarea name="task-description" id="task-description" rows="5"></textarea>
+        </div>
+        <div class="input-task-due">
+          <label for="task-due">Due date:</label>
+          <input type="date" id="task-due" required>
+        </div>
+        <div class="input-task-project">
+          <label for="task-project">Project:</label>
+          <select id="task-project"></select>
+        </div>
+        <div class="input-task-priority">
+          <label for="task-priority">Priority:</label>
+          <select id="task-priority">
+            <option value="high" class="high-priority">High</option>
+            <option value="medium" class="medium-priority">Medium</option>
+            <option value="low" class="low-priority" selected="selected">Low</option>
+          </select>
+        </div>
+        <div class="task-button-container">
+          <button class="create-task-button" type="submit">Create</button>
+          <button class="cancel-task-button" type="button">Cancel</button>
+        </div>  
+      </form>
+    </div>
+
+
+    <h1>Hilu's Todo App</h1>
+
+    <div class="content-container"></div>
+
+    <div class="update-task-container"></div>
+
+    <div class="update-project-container"></div>
+
+    </div>
+  </div>
+</body>
+</html>
