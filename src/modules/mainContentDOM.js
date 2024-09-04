@@ -289,15 +289,16 @@ export function MainContentDOM() {
     updateTaskForm();
   };
 
+  const compareDateWithToday = todo => {
+    const dueDate = new Date(todo.dueDate).toDateString();
+    return compareAsc(new Date().toDateString(), dueDate);
+  };
+
   const getTodayTasks = () => {
     let html = `<div class="task-container">`;
     projects.forEach((project, projectIndex) => {
       const taskList = project.todoList;
-      taskList.filter(todo => {
-        const dueDate = new Date(todo.dueDate).toDateString();
-        const result = compareAsc(new Date().toDateString(), dueDate);
-        return !todo.complete && result === 0;
-      }).forEach((task) => {
+      taskList.filter(todo => !todo.complete && compareDateWithToday(todo) === 0).forEach((task) => {
         html += renderOneTask(projectIndex, taskList.indexOf(task));
       });
     });
