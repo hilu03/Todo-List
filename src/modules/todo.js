@@ -11,6 +11,10 @@ export class Todo {
     this.complete = true;
   }
 
+  undoTodo() {
+    this.complete = false;
+  }
+
   updateTodo(title, description, dueDate, priority) {
     this.title = title;
     this.description = description;

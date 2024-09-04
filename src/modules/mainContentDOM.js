@@ -272,6 +272,8 @@ export function MainContentDOM() {
     expandTaskEvent();
     deleteTask();
     updateTaskForm();
+    completeTask();
+    undoTask();
   };
 
   const addCompleteIcon = () => {
@@ -297,6 +299,7 @@ export function MainContentDOM() {
     expandTaskEvent();
     deleteTask();
     updateTaskForm();
+    undoTask();
   };
 
   const compareDateWithToday = todo => {
@@ -356,6 +359,21 @@ export function MainContentDOM() {
     deleteTask();
     updateTaskForm();
     completeTask();
+  };
+
+  const undoTask = () => {
+    const completedTasks = document.querySelectorAll(".completed");
+    completedTasks.forEach(button => {
+      button.addEventListener("click", () => {
+        if (!anySidebarFormOpen() && !anyUpdateFormOpen()) {
+          const taskIndex = Number(button.dataset.taskId);
+          const projectIndex = Number(button.dataset.projectId);
+          projects[projectIndex].todoList[taskIndex].undoTodo();
+          button.classList.remove("completed");
+          reloadContent();
+        }
+      });
+    });
   };
 
   return { displayAllTask, anyUpdateFormOpen, closeUpdateForm, displayTasksInProject,
