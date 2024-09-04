@@ -18,14 +18,18 @@ export class Project {
   }
 };
 
-export const projects = JSON.parse(localStorage.getItem("projects")) || [];
+export let projects = JSON.parse(localStorage.getItem("projects")) || [];
 
-// const defaultProject = new Project("default");
-// projects.push(defaultProject);
-// const todo1 = new Todo("Wash dishes", "dajshd", "2024-08-27", "medium");
-// const todo2 = new Todo("Play with cats", "hahahah", "2024-08-29", "high");
-// defaultProject.addTodo(todo1);
-// defaultProject.addTodo(todo2);
+if (projects.length !== 0) {
+  const p = [];
+  projects.forEach((project, projectIndex) => {
+    p.push(new Project(project.name, project.color));
+    project.todoList.forEach(task => {
+      p[projectIndex].todoList.push(new Todo(task.title, task.description, task.dueDate, task.priority));
+    });
+  });
+  projects = p;
+}
 
 export function saveToStorage() {
   localStorage.setItem("projects", JSON.stringify(projects));
