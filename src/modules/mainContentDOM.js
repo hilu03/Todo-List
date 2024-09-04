@@ -42,6 +42,23 @@ export function MainContentDOM() {
     return html;
   };
 
+  const reloadContent = () => {
+    const choosing = document.querySelector(".choose");
+    if (choosing.classList.contains("all-task")) {
+      displayAllTask();
+    }
+    else if (choosing.classList.contains("completed-tasks")) {
+      displayCompletedTasks();
+    }
+    else if (choosing.classList.contains("today-task")) {
+      getTodayTasks();
+    }
+    else if (choosing.classList.contains("project-name")) {
+      const projectIndex = Number(choosing.dataset.projectId);
+      displayTasksInProject(projectIndex);
+    }
+  };
+
   const completeTask = () => {
     const completeButtons = document.querySelectorAll(".complete");
     completeButtons.forEach(button => {
@@ -50,7 +67,7 @@ export function MainContentDOM() {
           const taskIndex = Number(button.dataset.taskId);
           const projectIndex = Number(button.dataset.projectId);
           projects[projectIndex].todoList[taskIndex].completeTodo();
-          displayAllTask();
+          reloadContent();
         }
       });
     });
@@ -140,7 +157,7 @@ export function MainContentDOM() {
   
       projects[projectIndex].todoList[taskIndex].updateTodo(title, description, dueDate, priority);
       closeUpdateForm();
-      displayAllTask();
+      reloadContent();
     });
   };
 
