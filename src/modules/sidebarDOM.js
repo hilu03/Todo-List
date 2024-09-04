@@ -48,6 +48,10 @@ export function sidebarDOM() {
       contentDisplay.displayAllTask();
       changeTabChoosing("all-task");
     }
+    else if (choosing === "today-task") {
+      contentDisplay.getTodayTasks();
+      changeTabChoosing("today-task");
+    }
   };
 
   const deleteProjects = () => {
@@ -354,7 +358,11 @@ export function sidebarDOM() {
   };
   displayDateInTodayIcon();
 
-  
+  const todayButton = document.querySelector(".today-task");
+  todayButton.addEventListener("click", () => {
+    contentDisplay.getTodayTasks();
+    changeTabChoosing("today-task");
+  });
 
   return { viewAllProject };
 }

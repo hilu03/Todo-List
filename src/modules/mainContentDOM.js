@@ -4,6 +4,7 @@ import deleteIcon from "../images/delete.svg";
 import editIcon from "../images/pencil-outline.svg";
 import completeIcon from "../images/check-outline.svg";
 import { projects } from "./project.js";
+import { compareAsc } from "date-fns";
 
 
 export function MainContentDOM() {
@@ -50,7 +51,6 @@ export function MainContentDOM() {
           const projectIndex = Number(button.dataset.projectId);
           projects[projectIndex].todoList[taskIndex].completeTodo();
           displayAllTask();
-          console.log(projects);
         }
       });
     });
@@ -260,6 +260,7 @@ export function MainContentDOM() {
     html += "</div>";
 
     contentContainer.innerHTML = html;
+
     const completeDivs = document.querySelectorAll(".complete");
     html = `<img src=${completeIcon}>`;
     completeDivs.forEach(div => {
@@ -271,5 +272,27 @@ export function MainContentDOM() {
     updateTaskForm();
   };
 
-  return { displayAllTask, anyUpdateFormOpen, closeUpdateForm, displayTasksInProject, displayCompletedTasks };
+  const getTodayTasks = () => {
+    let html = `<div class="task-container">`;
+    projects.forEach((project, projectIndex) => {
+      const taskList = project.todoList;
+      taskList.filter(todo => {
+        const dueDate = new Date(todo.dueDate).toDateString();
+        const result = compareAsc(new Date().toDateString(), dueDate);
+        return !todo.complete && result === 0;
+      }).forEach((task) => {
+        html += renderOneTask(projectIndex, taskList.indexOf(task));
+      });
+    });
+    html += "</div>";
+
+    contentContainer.innerHTML = html;
+
+    expandTaskEvent();
+    deleteTask();
+    updateTaskForm();
+    completeTask();
+  };
+
+  return { displayAllTask, anyUpdateFormOpen, closeUpdateForm, displayTasksInProject, displayCompletedTasks, getTodayTasks };
 }
